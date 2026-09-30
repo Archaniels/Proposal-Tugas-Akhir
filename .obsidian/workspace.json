@@ -39,7 +39,7 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false,
+                "autoReveal": true,
                 "showSearch": false,
                 "searchQuery": ""
               },
@@ -212,9 +212,13 @@
   },
   "active": "cdb8246a426e5b1f",
   "lastOpenFiles": [
-    "resources/Template/Template Proposal FIF (Docx)/Template Proposal FIF.docx",
+    "accessed_urls.md",
     "00_proposal_drafts/30.09.2026_01.19_Proposal FIF_103022330076.docx",
+    "01_sources/latar_belakang_citations.md",
+    "research_kanban.md",
     "hub.base",
+    "00_proposal_drafts/~$.09.2026_01.19_Proposal FIF_103022330076.docx",
+    "resources/Template/Template Proposal FIF (Docx)/Template Proposal FIF.docx",
     "00_proposal_drafts",
     "02_literature_notes",
     "01_sources",
@@ -222,13 +226,8 @@
     "resources/Template/Template Proposal FIF (LaTeX)/Tel-U-Logo.png",
     "resources/Template/Template Proposal FIF (LaTeX)/References.bib",
     "resources/Template/Template Proposal FIF (LaTeX)/Pendahuluan.tex",
-    "resources/Template/Template Proposal FIF (LaTeX)/readme.txt",
-    "resources/Template/Template Proposal FIF (LaTeX)/main.tex",
     "resources/Template/Template Proposal FIF (Markdown)/Template Proposal FIF.md",
-    "research_kanban.md",
-    "citations.md",
     "Welcome.md",
-    "accessed_urls.md",
     "Template Proposal FIF (Markdown)/Template Proposal FIF.md",
     "Template Proposal FIF.md",
     "Template Proposal FIF (LaTeX)/Tel-U-Logo.png"

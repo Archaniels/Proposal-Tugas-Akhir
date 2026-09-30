@@ -1,5 +1,5 @@
 views:
-  - type: table
-    name: Table
   - type: cards
     name: Cards
+  - type: table
+    name: Table
