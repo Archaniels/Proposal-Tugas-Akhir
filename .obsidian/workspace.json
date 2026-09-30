@@ -4,20 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "e4ea7ff0e355bbe8",
+        "id": "ddec9b5687ee552e",
         "type": "tabs",
         "children": [
           {
-            "id": "fa01ce9a58d1b420",
+            "id": "cdb8246a426e5b1f",
             "type": "leaf",
             "state": {
-              "type": "bases",
+              "type": "docx-view",
               "state": {
-                "file": "hub.base",
-                "viewName": "Table"
+                "file": "00_proposal_drafts/30.09.2026_01.19_Proposal FIF_103022330076.docx"
               },
-              "icon": "lucide-table",
-              "title": "hub"
+              "icon": "lucide-file",
+              "title": "30.09.2026_01.19_Proposal FIF_103022330076"
             }
           }
         ]
@@ -98,7 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "hub.base",
+                "file": "00_proposal_drafts/30.09.2026_01.19_Proposal FIF_103022330076.docx",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -160,7 +159,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "hub.base",
+                "file": "00_proposal_drafts/30.09.2026_01.19_Proposal FIF_103022330076.docx",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -211,21 +210,21 @@
       "audio-recorder:Start/stop recording": false
     }
   },
-  "active": "fa01ce9a58d1b420",
+  "active": "cdb8246a426e5b1f",
   "lastOpenFiles": [
-    "Resources/Template/Template Proposal FIF (LaTeX)/Template Proposal FIF.zip",
-    "Resources/Template/Template Proposal FIF (LaTeX)/Tel-U-Logo.png",
-    "Resources/Template/Template Proposal FIF (LaTeX)/References.bib",
-    "Resources/Template/Template Proposal FIF (LaTeX)/Pendahuluan.tex",
-    "Resources/Template/Template Proposal FIF (LaTeX)/readme.txt",
-    "Resources/Template/Template Proposal FIF (LaTeX)/main.tex",
-    "Resources/Template/Template Proposal FIF (LaTeX)/Metodologi.tex",
-    "Resources/Template/Template Proposal FIF (LaTeX)/Lembar-Persetujuan.tex",
-    "Resources/Template/Template Proposal FIF (LaTeX)/Lampiran.tex",
-    "Resources/Template/Template Proposal FIF (LaTeX)/Kajian-Pustaka.tex",
-    "Resources/Template/Template Proposal FIF (LaTeX)/Cover.tex",
-    "Resources/Template/Template Proposal FIF (LaTeX)/Abstrak-Indo.tex",
-    "Resources/Template/Template Proposal FIF (Markdown)/Template Proposal FIF.md",
+    "resources/Template/Template Proposal FIF (Docx)/Template Proposal FIF.docx",
+    "00_proposal_drafts/30.09.2026_01.19_Proposal FIF_103022330076.docx",
+    "hub.base",
+    "00_proposal_drafts",
+    "02_literature_notes",
+    "01_sources",
+    "resources/Template/Template Proposal FIF (LaTeX)/Template Proposal FIF.zip",
+    "resources/Template/Template Proposal FIF (LaTeX)/Tel-U-Logo.png",
+    "resources/Template/Template Proposal FIF (LaTeX)/References.bib",
+    "resources/Template/Template Proposal FIF (LaTeX)/Pendahuluan.tex",
+    "resources/Template/Template Proposal FIF (LaTeX)/readme.txt",
+    "resources/Template/Template Proposal FIF (LaTeX)/main.tex",
+    "resources/Template/Template Proposal FIF (Markdown)/Template Proposal FIF.md",
     "research_kanban.md",
     "citations.md",
     "Welcome.md",
