@@ -11,18 +11,13 @@
             "id": "fa01ce9a58d1b420",
             "type": "leaf",
             "state": {
-              "type": "kanban",
+              "type": "bases",
               "state": {
-                "file": "research_kanban.md",
-                "kanbanViewState": {
-                  "kanban-plugin": "board",
-                  "list-collapse": [
-                    false
-                  ]
-                }
+                "file": "hub.base",
+                "viewName": "Table"
               },
-              "icon": "lucide-trello",
-              "title": "research_kanban"
+              "icon": "lucide-table",
+              "title": "hub"
             }
           }
         ]
@@ -103,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Welcome.md",
+                "file": "hub.base",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -165,7 +160,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "research_kanban.md",
+                "file": "hub.base",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -216,21 +211,27 @@
       "audio-recorder:Start/stop recording": false
     }
   },
-  "active": "9bc7d65ca0eefc73",
+  "active": "fa01ce9a58d1b420",
   "lastOpenFiles": [
-    "accessed_urls.md",
+    "Resources/Template/Template Proposal FIF (LaTeX)/Template Proposal FIF.zip",
+    "Resources/Template/Template Proposal FIF (LaTeX)/Tel-U-Logo.png",
+    "Resources/Template/Template Proposal FIF (LaTeX)/References.bib",
+    "Resources/Template/Template Proposal FIF (LaTeX)/Pendahuluan.tex",
+    "Resources/Template/Template Proposal FIF (LaTeX)/readme.txt",
+    "Resources/Template/Template Proposal FIF (LaTeX)/main.tex",
+    "Resources/Template/Template Proposal FIF (LaTeX)/Metodologi.tex",
+    "Resources/Template/Template Proposal FIF (LaTeX)/Lembar-Persetujuan.tex",
+    "Resources/Template/Template Proposal FIF (LaTeX)/Lampiran.tex",
+    "Resources/Template/Template Proposal FIF (LaTeX)/Kajian-Pustaka.tex",
+    "Resources/Template/Template Proposal FIF (LaTeX)/Cover.tex",
+    "Resources/Template/Template Proposal FIF (LaTeX)/Abstrak-Indo.tex",
+    "Resources/Template/Template Proposal FIF (Markdown)/Template Proposal FIF.md",
     "research_kanban.md",
     "citations.md",
-    "Template Proposal FIF.md",
-    "Template Proposal FIF (LaTeX)/Template Proposal FIF.zip",
     "Welcome.md",
-    "Template Proposal FIF (LaTeX)/Tel-U-Logo.png",
-    "Resources/Kartu Studi Mahasiswa (KSM)/103022330076 Registrasi _ Telkom University.pdf",
-    "Resources/Kartu Studi Mahasiswa (KSM)",
-    "Resources/New folder",
-    "Resources",
-    "New folder",
-    "Template Proposal FIF (Docx)/Template Proposal FIF.docx",
-    "Template Proposal FIF (Docx)"
+    "accessed_urls.md",
+    "Template Proposal FIF (Markdown)/Template Proposal FIF.md",
+    "Template Proposal FIF.md",
+    "Template Proposal FIF (LaTeX)/Tel-U-Logo.png"
   ]
 }
