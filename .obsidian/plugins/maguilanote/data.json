@@ -1,0 +1,83 @@
+{
+  "gridSnap": false,
+  "gridSize": 24,
+  "defaultNoteWidth": 260,
+  "templatesFolder": "Maguilanote Templates",
+  "assetsFolder": "Maguilanote Assets",
+  "fontFamily": "",
+  "headingFontFamily": "",
+  "theme": "light",
+  "keybindings": {
+    "undo": {
+      "key": "z",
+      "ctrl": true
+    },
+    "redo": {
+      "key": "z",
+      "ctrl": true,
+      "shift": true
+    },
+    "duplicate": {
+      "key": "d",
+      "ctrl": true
+    },
+    "copy": {
+      "key": "c",
+      "ctrl": true
+    },
+    "cut": {
+      "key": "x",
+      "ctrl": true
+    },
+    "paste": {
+      "key": "v",
+      "ctrl": true
+    },
+    "selectAll": {
+      "key": "a",
+      "ctrl": true
+    },
+    "search": {
+      "key": "f",
+      "ctrl": true
+    },
+    "deleteSelection": {
+      "key": "delete"
+    },
+    "drawMode": {
+      "key": "d"
+    },
+    "zoomReset": {
+      "key": "0",
+      "ctrl": true
+    }
+  },
+  "colors": {
+    "light": {
+      "canvasBg": "#eceef2",
+      "cardDefaultBg": "#ffffff",
+      "yellow": "#fff5c0",
+      "orange": "#ffd9b0",
+      "red": "#ffc7c2",
+      "purple": "#e2cbf7",
+      "blue": "#c4ddff",
+      "teal": "#bdede0",
+      "green": "#d3f2c0",
+      "gray": "#e4e4e8"
+    },
+    "dark": {
+      "canvasBg": "#31303b",
+      "cardDefaultBg": "#4a4b54",
+      "yellow": "#fff5c0",
+      "orange": "#ffd9b0",
+      "red": "#ffc7c2",
+      "purple": "#e2cbf7",
+      "blue": "#c4ddff",
+      "teal": "#bdede0",
+      "green": "#d3f2c0",
+      "gray": "#e4e4e8"
+    }
+  },
+  "defaultMicId": "",
+  "openaiApiKey": ""
+}

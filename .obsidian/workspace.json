@@ -11,14 +11,12 @@
             "id": "cdb8246a426e5b1f",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "pdf",
               "state": {
-                "file": "agentic_reviews/30.09.2026_gemini3.8-flash-high_judul-dan-bab-1-review.md",
-                "mode": "source",
-                "source": false
+                "file": "resources/template/literature_review/Petunjuk Tugas Literature Review.pdf"
               },
-              "icon": "lucide-file",
-              "title": "30.09.2026_gemini3.8-flash-high_judul-dan-bab-1-review"
+              "icon": "lucide-file-text",
+              "title": "Petunjuk Tugas Literature Review"
             }
           }
         ]
@@ -219,30 +217,37 @@
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
       "bases:Create new base": false,
-      "audio-recorder:Start/stop recording": false
+      "audio-recorder:Start/stop recording": false,
+      "maguilanote:Maguilanote: new board": false
     }
   },
-  "active": "cdb8246a426e5b1f",
+  "active": "9bc7d65ca0eefc73",
   "lastOpenFiles": [
-    "agentic_reviews/30.09.2026_sonnet5.5-medium_judul-dan-bab-1-review.md",
+    "resources/important_links.md",
+    "resources/lecture_notes_and_slides/W1-Pengantar-MK.pdf",
+    "resources/lecture_notes_and_slides/W3-Literature-Review.pdf",
+    "resources/lecture_notes_and_slides/W2-Introduction-Section.pdf",
+    "00_proposal_drafts/New board.board",
+    "resources/lecture_notes_and_slides/Unconfirmed 704224.crdownload",
+    "resources/lecture_notes_and_slides/Unconfirmed 421008.crdownload",
+    "resources/lecture_notes_and_slides/W0-Pengantar-MK.pdf",
+    "resources/lecture_notes_and_slides/Unconfirmed 384295.crdownload",
+    "resources/lecture_notes_and_slides",
+    "resources/kartu_studi_mahasiswa/103022330076 Registrasi _ Telkom University.pdf",
+    "00_proposal_drafts/30.09.2026_01.19_Proposal FIF_103022330076.md",
+    "00_proposal_drafts/02.10.2026_10.35_Proposal FIF_103022330076.md",
     "agentic_reviews/30.09.2026_gemini3.8-flash-high_judul-dan-bab-1-review.md",
     "01_sources/latar_belakang_citations.md",
-    "00_proposal_drafts/30.09.2026_01.19_Proposal FIF_103022330076.md",
-    "00_proposal_drafts/30.09.2026_01.19_Proposal FIF_103022330076.docx",
-    "00_proposal_drafts/Attachments/30092026_0119_Proposal FIF_103022330076.png",
-    "00_proposal_drafts/Attachments",
-    "agentic_reviews",
     "accessed_urls.md",
+    "Untitled.md",
+    "Latar Belakang.md",
     "research_kanban.md",
-    "hub.base",
-    "00_proposal_drafts/~$.09.2026_01.19_Proposal FIF_103022330076.docx",
-    "resources/Template/Template Proposal FIF (Docx)/Template Proposal FIF.docx",
-    "00_proposal_drafts",
-    "02_literature_notes",
-    "01_sources",
-    "resources/Template/Template Proposal FIF (LaTeX)/Template Proposal FIF.zip",
-    "resources/Template/Template Proposal FIF (LaTeX)/Tel-U-Logo.png",
-    "resources/Template/Template Proposal FIF (Markdown)/Template Proposal FIF.md",
+    "2026-10-01.md",
+    "agentic_reviews/30.09.2026_sonnet5.5-medium_judul-dan-bab-1-review.md",
+    "Untitled.canvas",
+    "00_proposal_drafts/Attachments/30092026_0119_Proposal FIF_103022330076.png",
+    "resources/template/Template Proposal FIF (LaTeX)/Tel-U-Logo.png",
+    "resources/template/Template Proposal FIF (Markdown)/Template Proposal FIF.md",
     "Welcome.md",
     "Template Proposal FIF (Markdown)/Template Proposal FIF.md",
     "Template Proposal FIF.md",

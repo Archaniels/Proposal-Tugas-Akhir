@@ -1,0 +1,14 @@
+views:
+  - type: table
+    name: Table
+    filters:
+      and:
+        - file.hasTag("papers/latar_belakang")
+    order:
+      - file.name
+      - url
+      - key_findings
+      - year
+    sort:
+      - property: year
+        direction: ASC

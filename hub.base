@@ -1,5 +1,8 @@
 views:
-  - type: cards
-    name: Cards
   - type: table
     name: Table
+    order:
+      - file.name
+    rowHeight: medium
+  - type: cards
+    name: Cards
