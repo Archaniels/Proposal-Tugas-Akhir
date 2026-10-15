@@ -11,15 +11,88 @@
             "id": "cdb8246a426e5b1f",
             "type": "leaf",
             "state": {
-              "type": "pdf",
+              "type": "markdown",
               "state": {
-                "file": "resources/template/literature_review/Petunjuk Tugas Literature Review.pdf"
+                "file": "02_literature_notes/literature_review.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-file-text",
-              "title": "Petunjuk Tugas Literature Review"
+              "icon": "lucide-file",
+              "title": "literature_review"
+            }
+          },
+          {
+            "id": "856f295f5168570b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "02_literature_notes/literature_review.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "literature_review"
+            }
+          },
+          {
+            "id": "69c1e7c0af890312",
+            "type": "leaf",
+            "state": {
+              "type": "webviewer",
+              "state": {
+                "url": "https://journal.moestopo.ac.id/index.php/abdimoestopo/article/view/4944",
+                "title": "Building A Sub-Website: Facilitating Accessibility For Inclusive Higher Education Disability-Friendly Universities In Indonesia | Arifputri | ABDI MOESTOPO: Jurnal Pengabdian Pada Masyarakat",
+                "mode": "webview"
+              },
+              "icon": "globe-2",
+              "title": "Building A Sub-Website: Facilitating Accessibility For Inclusive Higher Education Disability-Friendly Universities In Indonesia | Arifputri | ABDI MOESTOPO: Jurnal Pengabdian Pada Masyarakat"
+            }
+          },
+          {
+            "id": "301ab4a03d89ece8",
+            "type": "leaf",
+            "state": {
+              "type": "webviewer",
+              "state": {
+                "url": "https://journal.moestopo.ac.id/index.php/abdimoestopo/article/view/4944/2023",
+                "title": "Building A Sub-Website: Facilitating Accessibility For Inclusive Higher Education Disability-Friendly Universities In Indonesia | Arifputri | ABDI MOESTOPO: Jurnal Pengabdian Pada Masyarakat",
+                "mode": "blank"
+              },
+              "icon": "globe-2",
+              "title": "Building A Sub-Website: Facilitating Accessibility For Inclusive Higher Education Disability-Friendly Universities In Indonesia | Arifputri | ABDI MOESTOPO: Jurnal Pengabdian Pada Masyarakat"
+            }
+          },
+          {
+            "id": "161ea1ed1d9789de",
+            "type": "leaf",
+            "state": {
+              "type": "webviewer",
+              "state": {
+                "url": "https://i-deahub.org/",
+                "title": "IDEA Hub | Portal Informasi Pendidikan Tinggi Inklusif Bagi Disabilitas",
+                "mode": "webview"
+              },
+              "icon": "globe-2",
+              "title": "IDEA Hub | Portal Informasi Pendidikan Tinggi Inklusif Bagi Disabilitas"
+            }
+          },
+          {
+            "id": "b3a655cf867db97d",
+            "type": "leaf",
+            "state": {
+              "type": "webviewer",
+              "state": {
+                "url": "https://www.instagram.com/i_deahub",
+                "title": "Indonesian Disability-Inclusion for Education & Accessibility (@i_deahub) • Instagram photos and videos",
+                "mode": "webview"
+              },
+              "icon": "globe-2",
+              "title": "Indonesian Disability-Inclusion for Education & Accessibility (@i_deahub) • Instagram photos and videos"
             }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -81,7 +154,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "b73c417c17052b00",
@@ -199,11 +273,12 @@
             }
           }
         ],
-        "currentTab": 6
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -221,8 +296,11 @@
       "maguilanote:Maguilanote: new board": false
     }
   },
-  "active": "9bc7d65ca0eefc73",
+  "active": "161ea1ed1d9789de",
   "lastOpenFiles": [
+    "02_literature_notes/literature_review.md",
+    "resources/template/literature_review/Petunjuk Tugas Literature Review.pdf",
+    "resources/template/literature_review/Tabel Literature Review.docx",
     "resources/important_links.md",
     "resources/lecture_notes_and_slides/W1-Pengantar-MK.pdf",
     "resources/lecture_notes_and_slides/W3-Literature-Review.pdf",
@@ -232,8 +310,6 @@
     "resources/lecture_notes_and_slides/Unconfirmed 421008.crdownload",
     "resources/lecture_notes_and_slides/W0-Pengantar-MK.pdf",
     "resources/lecture_notes_and_slides/Unconfirmed 384295.crdownload",
-    "resources/lecture_notes_and_slides",
-    "resources/kartu_studi_mahasiswa/103022330076 Registrasi _ Telkom University.pdf",
     "00_proposal_drafts/30.09.2026_01.19_Proposal FIF_103022330076.md",
     "00_proposal_drafts/02.10.2026_10.35_Proposal FIF_103022330076.md",
     "agentic_reviews/30.09.2026_gemini3.8-flash-high_judul-dan-bab-1-review.md",

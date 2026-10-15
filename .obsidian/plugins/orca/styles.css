@@ -1,0 +1,4819 @@
+/* Orca's own chrome. Page styling is the book's CSS and never lands here. */
+
+/* The bar runs the width of the pane, so the pane's own padding goes. */
+.view-content.orca-preview {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.orca-preview-bar {
+  /* The bar is the warnings' positioning context, so the panel hangs
+     from it rather than from the pane. */
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--size-4-2);
+  padding: var(--size-4-2) var(--size-4-3);
+  border-bottom: 1px solid var(--divider-color);
+  background: var(--background-secondary);
+  flex: none;
+}
+
+/* The bar sits back from the page. Obsidian's chrome tone goes lighter
+   in the dark, so the dark theme is a scrim instead. */
+.theme-dark .orca-preview-bar {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* The row is as tall as the tallest thing in it, so the field is the
+   bar's height rather than the one Obsidian gives an input. */
+.orca-preview-bar input.orca-preview-folio {
+  width: 58px;
+  height: 26px;
+  min-height: 26px;
+  padding: 0 var(--size-4-2);
+  text-align: center;
+  font-size: var(--font-ui-small);
+}
+
+/* The switcher sits at the left of the bar and the stepper at the
+   right, so the spacer between them is what parts the two. */
+.orca-preview-spacer {
+  flex: 1;
+}
+
+/* The chapter reads beside the folio: one says which section, the other
+   which page. A long chapter name is cut rather than pushing the stepper
+   off the bar. */
+.orca-preview-bar select.orca-preview-chapter {
+  height: 26px;
+  min-width: 0;
+  max-width: 180px;
+  font-size: var(--font-ui-small);
+}
+
+/* The count of what the last run had to complain about, beside the
+   page it set. It opens the warnings under the bar. */
+.orca-preview-bar button.orca-preview-issues-count {
+  display: inline-flex;
+  align-items: center;
+  height: 18px;
+  padding: 0 7px;
+  border: none;
+  border-radius: var(--pill-radius);
+  box-shadow: none;
+  font-size: 10.5px;
+  font-weight: var(--font-medium);
+  letter-spacing: 0.02em;
+  background: rgba(233, 151, 63, 0.15);
+  color: var(--color-orange);
+  cursor: pointer;
+  flex: none;
+}
+
+/* The pill holds the count. On desktop the button is the pill. */
+.orca-preview-issues-count .orca-preview-pill {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* The icon form of the count is drawn only where its words do not fit. */
+.orca-preview-issues-count .orca-preview-alert {
+  display: none;
+}
+
+/* The chevron turns over as the warnings open, the way a disclosure
+   control does. */
+.orca-preview-issues-count .orca-preview-opens {
+  display: inline-flex;
+  margin-left: 3px;
+}
+
+.orca-preview-issues-count .orca-preview-opens .svg-icon {
+  width: 11px;
+  height: 11px;
+}
+
+.orca-preview-issues-count.is-on .orca-preview-opens {
+  transform: rotate(180deg);
+}
+
+.orca-preview-bar button.orca-preview-issues-count:hover,
+.orca-preview-bar button.orca-preview-issues-count.is-on {
+  background: rgba(233, 151, 63, 0.28);
+  color: var(--color-orange);
+}
+
+/* The warnings hang from the bar and float over the pages, so opening
+   them turns no page and moves nothing. A long list scrolls inside the
+   panel, and a narrow pane bounds its width. */
+.orca-preview-issues {
+  position: absolute;
+  z-index: var(--layer-menu);
+  top: calc(100% + 4px);
+  /* `right` and `max-width` are measured onto the panel: the count the
+     panel hangs from sits where the bar's own widths put it. */
+  right: var(--size-4-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-4-1);
+  width: max-content;
+  min-width: 240px;
+  max-width: calc(100% - var(--size-4-3) * 2);
+  max-height: 40vh;
+  overflow-y: auto;
+  padding: var(--size-4-2);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-m);
+  background: var(--background-primary);
+  box-shadow: var(--shadow-s);
+}
+
+.orca-preview-issue-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-4-1);
+}
+
+.orca-preview-issue-group + .orca-preview-issue-group {
+  margin-top: var(--size-4-2);
+}
+
+.orca-preview-issue-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--size-4-2);
+  padding: 0 2px var(--size-2-1);
+  font-size: var(--font-ui-small);
+  font-weight: var(--font-medium);
+  color: var(--text-muted);
+}
+
+.orca-preview-issue-count {
+  margin-left: auto;
+  font-size: var(--font-ui-smaller);
+  color: var(--text-faint);
+}
+
+.orca-preview-issue {
+  border-left: 2px solid var(--color-orange);
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+  background: rgba(233, 151, 63, 0.08);
+  padding: var(--size-4-2);
+}
+
+.orca-preview-issue-said {
+  font-size: var(--font-ui-smaller);
+  line-height: 1.45;
+  color: var(--text-normal);
+}
+
+/* A font the book did not get is an error, drawn as export draws one. */
+.orca-preview-issue.mod-error {
+  border-left-color: var(--color-red);
+  background: rgba(251, 70, 76, 0.09);
+}
+
+.orca-preview-issue-at {
+  margin-top: 3px;
+  font-family: var(--font-monospace);
+  font-size: var(--font-ui-smaller);
+  color: var(--text-faint);
+}
+
+/* A link in the words of the line, so none of a button's own chrome. */
+.orca-preview-issue-open {
+  display: inline;
+  height: auto;
+  padding: 0;
+  border: none;
+  background: none;
+  box-shadow: none;
+  font: inherit;
+  color: var(--text-accent);
+  cursor: var(--cursor-link);
+}
+
+.orca-preview-issue-open:hover {
+  background: none;
+  text-decoration: underline;
+}
+
+.orca-preview-divider {
+  width: 1px;
+  height: 18px;
+  background: var(--divider-color);
+  flex: none;
+}
+
+.orca-preview-views {
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-s);
+  background: var(--background-secondary);
+}
+
+.orca-preview-views button.clickable-icon {
+  padding: 2px 7px;
+  border-radius: 3px;
+  color: var(--text-muted);
+}
+
+.orca-preview-views button.clickable-icon.is-on {
+  background: var(--interactive-normal);
+  color: var(--text-normal);
+}
+
+.orca-preview-total {
+  flex: none;
+  color: var(--text-faint);
+  font-size: var(--font-ui-small);
+  white-space: nowrap;
+}
+
+.orca-preview-well {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  --orca-well-pad: var(--size-4-5);
+  padding: var(--orca-well-pad);
+  overflow: hidden;
+  container-type: size;
+}
+
+/* The ring is for a reader who came to the pages with the keyboard.
+   A key pressed after a click, as Space is to move a zoomed page, also
+   makes the focus visible, and draws no ring. */
+.orca-preview-well:focus-visible {
+  outline: none;
+}
+
+.orca-preview-well.is-tabbed:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--color-accent);
+}
+
+/* Every view lays its sheets out on one grid, so the well's room is
+   divided the same way whether one page is on it or a screenful. */
+.orca-preview-sheets {
+  --orca-trim-w: 2;
+  --orca-trim-h: 3;
+  --orca-columns: 1;
+  --orca-rows: 1;
+  --orca-gap: 0px;
+  --orca-zoom: 1;
+  display: grid;
+  grid-template-columns: repeat(var(--orca-columns), auto);
+  gap: var(--orca-gap);
+  align-items: center;
+  justify-items: center;
+  container-type: size;
+  width: 100%;
+  height: 100%;
+  align-content: center;
+  justify-content: center;
+}
+
+/* The page is as big as its share of the well leaves it and keeps its
+   trim, and the box is the sheet: the border and the shadow are drawn
+   on the box, so a box the sheet does not fill hangs them off its
+   edge. */
+.orca-page {
+  aspect-ratio: var(--orca-trim-w) / var(--orca-trim-h);
+  height: calc(
+    min(
+      (100cqh - (var(--orca-rows) - 1) * var(--orca-gap)) / var(--orca-rows),
+      (100cqw - (var(--orca-columns) - 1) * var(--orca-gap)) /
+      var(--orca-columns) * var(--orca-trim-h) / var(--orca-trim-w)
+    ) * var(--orca-zoom)
+  );
+}
+
+/* A zoomed page is larger than the well, so the sheets scroll under
+   it. A page centered past the well's edge starts at the edge instead,
+   so the scroll reaches all of it. The scrollbars are hidden, since one
+   that took room from the well would change the size a page fits at. */
+.orca-preview-sheets.is-zoomed {
+  overflow: auto;
+  align-content: safe center;
+  justify-content: safe center;
+  scrollbar-width: none;
+}
+
+.orca-preview-sheets.is-zoomed::-webkit-scrollbar {
+  display: none;
+}
+
+/* While Space is held the pointer is a hand, and a drag moves the page
+   in place of selecting its text. */
+.orca-preview-sheets.is-hand,
+.orca-preview-sheets.is-hand * {
+  cursor: grab;
+  user-select: none;
+}
+
+.orca-preview-sheets.is-hand.is-gripped,
+.orca-preview-sheets.is-hand.is-gripped * {
+  cursor: grabbing;
+}
+
+/* The browser pans a zoomed page under one finger and leaves two
+   fingers to the preview, which zooms by them. */
+.orca-preview-well {
+  touch-action: pan-x pan-y;
+}
+
+/* The zoom's slot holds nothing where the view does not zoom, and an
+   empty slot adds no gap to the bar. */
+.orca-zoom {
+  display: inline-flex;
+  align-items: center;
+}
+
+.orca-zoom:empty {
+  display: none;
+}
+
+.orca-zoom button.orca-zoom-percent {
+  min-width: 4ch;
+  height: auto;
+  padding: var(--size-2-1) var(--size-2-2);
+  border: none;
+  background: none;
+  box-shadow: none;
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+  font-variant-numeric: tabular-nums;
+  cursor: var(--cursor);
+}
+
+.orca-zoom button.orca-zoom-percent:hover {
+  color: var(--text-normal);
+}
+
+.orca-zoom button.clickable-icon:disabled {
+  opacity: 0.4;
+}
+
+.orca-page svg {
+  display: block;
+  height: 100%;
+  width: 100%;
+  box-shadow:
+    0 2px 10px rgba(0, 0, 0, 0.18),
+    0 0 0 1px var(--background-modifier-border);
+}
+
+/* The paper is white in either theme, and the accent reads on it in
+   both. A rule here beats the attributes the painter wrote. */
+.orca-page rect[data-trim] {
+  stroke: var(--interactive-accent);
+}
+
+.orca-preview-sheets[data-trim-edge="off"] rect[data-trim] {
+  display: none;
+}
+
+/* Obsidian turns selection off on the body, so a drag over the pages
+   selects nothing until the sheets turn it back on. Only the painter's
+   selection layer takes it: the glyphs under it are the same words, and
+   a highlight on both would draw every line twice. */
+.orca-preview-sheets {
+  user-select: text;
+}
+
+.orca-page text:not([data-selection-line]) {
+  user-select: none;
+}
+
+/* A page is paper in either theme, so its highlight is the accent at
+   its own lightness. The theme's selection colour is mixed for the
+   theme's background, and on paper a dark theme's all but vanishes. */
+.orca-page text[data-selection-line]::selection {
+  background-color: hsla(var(--accent-h), var(--accent-s), var(--accent-l), 0.35);
+}
+
+/* A spread that opens on a recto leaves the slot beside it empty, and
+   the empty slot still holds the recto on its own side of the spine. */
+.orca-page[data-empty] {
+  visibility: hidden;
+}
+
+/* The EPUB view takes the well in place of the pages, and the bar's
+   page controls give way to its own. */
+.orca-reflow-host {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+.orca-preview.is-reflow .orca-reflow-host {
+  display: block;
+}
+
+.orca-preview.is-reflow .orca-preview-sheets,
+.orca-preview.is-reflow .orca-preview-well.is-covered > .orca-reflow-host,
+.orca-preview.is-reflow .orca-preview-paging {
+  display: none;
+}
+
+/* The slot is out of the bar until the view is on, so an empty slot
+   adds no gap to it. */
+.orca-reflow-controls {
+  display: none;
+  align-items: center;
+  gap: var(--size-4-2);
+  min-width: 0;
+}
+
+.orca-preview.is-reflow .orca-reflow-controls {
+  display: flex;
+}
+
+/* A pane narrower than its controls puts them on a second line. */
+.orca-preview.is-reflow .orca-preview-bar {
+  flex-wrap: wrap;
+}
+
+.orca-preview-bar select.orca-reflow-device {
+  height: 26px;
+  min-width: 0;
+  font-size: var(--font-ui-small);
+}
+
+.orca-reflow-icon {
+  display: flex;
+}
+
+/* The settings hang from the bar and float over the frame, so opening
+   them moves nothing. Where they hang is measured onto them. */
+.orca-reflow-popover {
+  position: absolute;
+  z-index: var(--layer-menu);
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-4-2);
+  width: 320px;
+  max-width: calc(100% - var(--size-4-3) * 2);
+  padding: var(--size-4-3);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-m);
+  background: var(--background-primary);
+  box-shadow: var(--shadow-s);
+}
+
+.orca-reflow-popover .orca-panel-label {
+  width: 8em;
+}
+
+/* The text size is a smaller letter, the step, and a larger letter. */
+button.orca-panel-choice.orca-reflow-smaller {
+  font-size: 11px;
+}
+
+button.orca-panel-choice.orca-reflow-larger {
+  font-size: 17px;
+}
+
+button.orca-panel-choice:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.orca-reflow-step {
+  flex: 1 1 0;
+  align-self: center;
+  text-align: center;
+  font-size: var(--font-ui-smaller);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* In the reader settings a choice is drawn in one colour whether it is
+   in force or not, as Obsidian's own segmented control is. The one in
+   force is marked by its raised pill alone. */
+.orca-reflow-popover button.orca-panel-choice.is-on,
+.orca-reflow-popover button.orca-panel-choice.is-on.is-default {
+  color: var(--text-muted);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.orca-reflow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-4-2);
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+}
+
+.orca-reflow-room {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+}
+
+/* The status line stays on one line. A long title ends in an ellipsis,
+   and the page and the percentage after it stay whole. */
+.orca-reflow-status {
+  display: flex;
+  flex: none;
+  justify-content: center;
+  min-width: 0;
+  min-height: 1.4em;
+  padding: 0 var(--size-4-3);
+  font-size: var(--font-ui-smaller);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.orca-reflow-title {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.orca-reflow-dot,
+.orca-reflow-place {
+  flex: none;
+  white-space: pre;
+}
+
+/* The box the scaled device takes in the room. The device inside it
+   keeps its own size and is scaled, so the book is laid out for the
+   device and not for the pane. */
+.orca-reflow-fit {
+  flex: none;
+}
+
+/* A zoomed device is larger than its room, so the room scrolls under
+   it, as the sheets do under a zoomed page. */
+.orca-reflow-host {
+  --orca-zoom: 1;
+}
+
+.orca-reflow-host.is-zoomed .orca-reflow-room {
+  overflow: auto;
+  align-items: safe center;
+  justify-content: safe center;
+  scrollbar-width: none;
+}
+
+.orca-reflow-host.is-zoomed .orca-reflow-room::-webkit-scrollbar {
+  display: none;
+}
+
+.orca-reflow-host.is-hand,
+.orca-reflow-host.is-hand * {
+  cursor: grab;
+  user-select: none;
+}
+
+.orca-reflow-host.is-hand.is-gripped,
+.orca-reflow-host.is-hand.is-gripped * {
+  cursor: grabbing;
+}
+
+/* A press on the frame goes to the book inside it, so the frame steps
+   aside while Space is held and the drag reaches the well. */
+.orca-reflow-host.is-hand iframe.orca-reflow-frame {
+  pointer-events: none;
+}
+
+/* WebKit runs no listener inside a frame sandboxed without scripts,
+   so on a touch screen a finger on the frame would reach nothing. The
+   frame steps aside there, and the pinch and the drag reach the well. */
+.is-mobile iframe.orca-reflow-frame {
+  pointer-events: none;
+}
+
+/* The device is a drawn object, so its body is a fixed tone in either
+   theme. The light ring is what parts a dark body from a dark pane. */
+.orca-reflow-body {
+  position: relative;
+  box-sizing: border-box;
+  background: #1b1b1d;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.16),
+    0 0 0 2px rgba(0, 0, 0, 0.5),
+    0 10px 30px rgba(0, 0, 0, 0.3);
+  transform-origin: 0 0;
+}
+
+/* A phone's frame is a band of metal around the glass. */
+.orca-reflow-body.mod-phone {
+  box-shadow:
+    inset 0 0 0 3px #6e6f73,
+    0 0 0 1px rgba(0, 0, 0, 0.5),
+    0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* An e-reader's body is matte plastic, flat and a little lighter. */
+.orca-reflow-body.mod-ink {
+  background: #2c2d30;
+}
+
+.orca-reflow-screen {
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* An e-ink panel has no colour. */
+.orca-reflow-body.mod-ink .orca-reflow-screen {
+  filter: grayscale(1);
+}
+
+iframe.orca-reflow-frame {
+  display: block;
+  border: none;
+}
+
+.orca-reflow-camera {
+  position: absolute;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #0a0a0b;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.14);
+  transform: translate(-50%, -50%);
+}
+
+.orca-reflow-camera.mod-island {
+  top: 11px;
+  width: 124px;
+  height: 36px;
+  border-radius: 18px;
+  background: #000;
+  box-shadow: none;
+  transform: translateX(-50%);
+}
+
+.orca-reflow-camera.mod-hole {
+  top: 12px;
+  width: 16px;
+  height: 16px;
+  background: #000;
+  box-shadow: none;
+  transform: translateX(-50%);
+}
+
+/* The bar that goes home, which the system draws over the app. */
+.orca-reflow-home {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  width: 36%;
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.8);
+  transform: translateX(-50%);
+}
+
+.orca-reflow-screen.mod-dark .orca-reflow-home {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.orca-preview-message {
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+}
+
+/* The book being set, or the reason it was not, stands in the well in
+   place of the pages. A book being set again has pages already, and
+   they stay under the notice. */
+.orca-preview-well.is-covered > .orca-preview-sheets {
+  display: none;
+}
+
+/* A whole book has to be laid out before any page of it is right, and
+   the first one has nothing cached. */
+.orca-preview-setting {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 13px;
+  text-align: center;
+}
+
+.orca-preview-setting-icon {
+  display: flex;
+  color: var(--text-faint);
+}
+
+.orca-preview-setting-icon .svg-icon {
+  width: 26px;
+  height: 26px;
+}
+
+.orca-preview-setting-name {
+  color: var(--text-normal);
+  font-size: 13.5px;
+}
+
+/* The engine reports no progress while it lays the book out, so the
+   wait is an open book, seen from above, whose pages turn over the
+   spine from right to left for as long as the book sets. */
+.orca-preview-book {
+  --orca-book-page-width: 26px;
+  --orca-book-page-height: 34px;
+  --orca-book-rim: 2px;
+  --orca-book-cover: var(--color-accent);
+  --orca-book-radius: 3px;
+
+  position: relative;
+  width: calc(2 * var(--orca-book-page-width) + 2 * var(--orca-book-rim));
+  height: calc(var(--orca-book-page-height) + 2 * var(--orca-book-rim));
+  transform: perspective(160px) rotateX(28deg);
+  transform-style: preserve-3d;
+}
+
+.orca-preview-book-cover {
+  position: absolute;
+  inset: 0;
+  border-radius: calc(var(--orca-book-radius) + var(--orca-book-rim));
+  background: var(--orca-book-cover);
+  transform: translateZ(-2px);
+}
+
+.orca-preview-book-page {
+  position: absolute;
+  top: var(--orca-book-rim);
+  width: var(--orca-book-page-width);
+  height: var(--orca-book-page-height);
+  padding: 5px 4px;
+  background:
+    repeating-linear-gradient(to bottom, var(--text-faint) 0 1px, transparent 1px 4px)
+      content-box,
+    var(--background-primary);
+}
+
+.orca-preview-book-page.mod-left {
+  left: var(--orca-book-rim);
+  border-radius: var(--orca-book-radius) 0 0 var(--orca-book-radius);
+}
+
+.orca-preview-book-page.mod-right {
+  left: calc(var(--orca-book-rim) + var(--orca-book-page-width));
+  border-radius: 0 var(--orca-book-radius) var(--orca-book-radius) 0;
+}
+
+.orca-preview-book-page.mod-turn {
+  box-shadow: inset 0 0 0 1px var(--background-modifier-border);
+  transform-origin: 0 50%;
+  animation: orca-preview-turn 1.8s ease-in-out var(--orca-turn-delay) infinite;
+}
+
+@keyframes orca-preview-turn {
+  0%,
+  15% {
+    transform: rotateY(0deg);
+  }
+  75%,
+  100% {
+    transform: rotateY(-180deg);
+  }
+}
+
+/* A still book lies open with no page in the air. */
+@media (prefers-reduced-motion: reduce) {
+  .orca-preview-book-page.mod-turn {
+    animation: none;
+  }
+}
+
+.orca-preview-setting-note {
+  color: var(--text-faint);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* A book being set again, and one orca stopped setting, float over the
+   pages already painted rather than stand in place of them. */
+.orca-preview-setting.mod-again,
+.orca-preview-setting.mod-held {
+  position: absolute;
+  z-index: 1;
+  top: var(--size-4-2);
+  right: var(--size-4-2);
+  left: var(--size-4-2);
+  flex-direction: row;
+  align-items: center;
+  gap: var(--size-4-3);
+  padding: var(--size-4-2) var(--size-4-3);
+  text-align: left;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-m);
+  background: var(--background-secondary);
+  box-shadow: var(--shadow-s);
+}
+
+.orca-preview-setting.mod-again .orca-preview-setting-icon,
+.orca-preview-setting.mod-held .orca-preview-setting-icon {
+  color: var(--color-orange);
+}
+
+.orca-preview-setting.mod-again .orca-preview-setting-icon .svg-icon,
+.orca-preview-setting.mod-held .orca-preview-setting-icon .svg-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.orca-preview-setting.mod-again .orca-preview-book {
+  --orca-book-page-width: 16px;
+  --orca-book-page-height: 21px;
+  --orca-book-rim: 1px;
+  --orca-book-cover: var(--color-orange);
+  --orca-book-radius: 2px;
+}
+
+.orca-preview-setting.mod-again .orca-preview-book-page {
+  padding: 3px 2px;
+}
+
+.orca-preview-report {
+  margin-left: auto;
+}
+
+/* The React root mounts inside the view, one flex step below the
+   scroller Obsidian sizes for it, so both steps carry the sizing down. */
+.orca-book-host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.orca-book {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: var(--size-4-8) var(--size-4-12);
+}
+
+.orca-book-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-4-5);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.orca-book-name {
+  font-size: 30px;
+  font-weight: var(--font-bold);
+  letter-spacing: -0.015em;
+}
+
+.orca-book-line {
+  display: flex;
+  align-items: center;
+  gap: var(--size-4-2);
+  margin-top: var(--size-4-1);
+  color: var(--text-faint);
+  font-size: var(--font-ui-smaller);
+}
+
+.orca-book-format {
+  font-family: var(--font-monospace);
+}
+
+.orca-book-metadata {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-top: 1px solid var(--divider-color);
+  border-bottom: 1px solid var(--divider-color);
+  padding: var(--size-4-2) 0;
+}
+
+.orca-book-row {
+  display: flex;
+  align-items: center;
+  gap: var(--size-4-3);
+}
+
+.orca-book-label {
+  width: 110px;
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+}
+
+/* A value reads as text until it is pointed at or focused, and then as
+   the field it is. */
+.orca-book input.orca-book-value {
+  flex: 1;
+  height: 28px;
+  padding: 0 var(--size-4-2);
+  border: none;
+  border-radius: var(--radius-s);
+  background: none;
+  box-shadow: none;
+  color: var(--text-normal);
+  font-size: var(--font-ui-medium);
+}
+
+.orca-book input.orca-book-value:hover {
+  background: var(--background-modifier-form-field);
+}
+
+.orca-book input.orca-book-value:focus {
+  background: var(--background-modifier-form-field);
+  box-shadow: 0 0 0 2px var(--color-accent);
+}
+
+.orca-book input.orca-book-value::placeholder {
+  color: var(--text-faint);
+}
+
+/* The cover is a picture the author picks, with the image's name beside it. */
+.orca-cover {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--size-4-2);
+  min-width: 0;
+}
+
+.orca-book button.orca-cover-pick {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--size-4-3);
+  min-width: 0;
+  height: auto;
+  padding: var(--size-2-3) var(--size-4-2);
+  border: none;
+  border-radius: var(--radius-s);
+  background: none;
+  box-shadow: none;
+  color: var(--text-normal);
+  font-size: var(--font-ui-medium);
+  text-align: left;
+  white-space: normal;
+}
+
+.orca-book button.orca-cover-pick:hover {
+  background: var(--background-modifier-form-field);
+}
+
+.orca-cover-picture,
+.orca-cover-frame {
+  flex: none;
+  height: 68px;
+  border-radius: var(--radius-s);
+}
+
+/* The picture keeps the image's own proportions. */
+.orca-book img.orca-cover-picture {
+  width: auto;
+  max-width: 68px;
+  object-fit: contain;
+  box-shadow: var(--shadow-s);
+}
+
+.orca-cover-frame {
+  width: 44px;
+  border: 1px dashed var(--background-modifier-border-hover);
+}
+
+.orca-cover-frame.is-missing {
+  border-color: var(--color-orange);
+}
+
+.orca-cover-named {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.orca-cover-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.orca-cover-where,
+.orca-cover-none {
+  color: var(--text-faint);
+}
+
+.orca-cover-where,
+.orca-cover-missing {
+  font-size: var(--font-ui-smaller);
+}
+
+.orca-cover-missing {
+  color: var(--color-orange);
+}
+
+.orca-order-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--size-4-3);
+  margin-bottom: var(--size-4-3);
+}
+
+.orca-order-title,
+.orca-order-columns {
+  color: var(--text-faint);
+  font-size: 11px;
+  font-weight: var(--font-semibold);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.orca-order-hint {
+  color: var(--text-faint);
+  font-size: var(--font-ui-smaller);
+}
+
+.orca-order {
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-m);
+  overflow: hidden;
+}
+
+.orca-order-columns,
+.orca-order-row {
+  display: grid;
+  grid-template-columns: 1fr 92px 92px;
+  padding: 6px 14px;
+}
+
+.orca-order-columns {
+  padding: 7px 14px;
+  background: var(--background-modifier-hover);
+  font-weight: var(--font-semibold);
+}
+
+.orca-order-row {
+  border-top: 1px solid var(--divider-color);
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+  cursor: pointer;
+}
+
+.orca-order-row:hover {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+.orca-order-row:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--color-accent);
+}
+
+.orca-order-entry {
+  display: flex;
+  align-items: center;
+  gap: var(--size-4-2);
+  min-width: 0;
+}
+
+.orca-order-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.orca-order-row .orca-chip {
+  margin-left: 0;
+}
+
+.orca-order-row[data-kind="generated"] .orca-chip {
+  background: none;
+  color: var(--text-faint);
+}
+
+.orca-order-row[data-kind="missing"] .orca-order-name {
+  color: var(--text-error);
+}
+
+.orca-order-count {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.orca-order-none {
+  color: var(--text-faint);
+}
+
+.orca-book-refused {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--size-4-3);
+  height: 100%;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.orca-book-icon {
+  color: var(--text-faint);
+}
+
+.orca-book-said {
+  color: var(--text-normal);
+}
+
+.orca-book-hint {
+  color: var(--text-faint);
+  font-size: var(--font-ui-smaller);
+}
+
+.orca-navigator {
+  padding: 0 var(--size-4-1) var(--size-4-2);
+  overflow: auto;
+}
+
+/* The file explorer's bar sits flush with the top of its pane, and so
+   does this one. */
+body:not(.is-phone) .workspace-leaf-content[data-type="orca-navigator"] > .view-content {
+  padding-top: 0;
+}
+
+/* The filter field sits under the bar, in Obsidian's own search box. */
+.orca-nav-search {
+  padding: 0 var(--size-4-2) var(--size-4-2);
+}
+
+.orca-nav-quiet {
+  padding: var(--size-4-2);
+  color: var(--text-faint);
+  font-size: var(--font-ui-small);
+}
+
+/* Each book is a card, so one book ends where its border does. The
+   card's surface is a tint over the sidebar, so a sidebar the theme
+   makes translucent shows through the card too. The tint moves the
+   card toward the editor's surface: white in a light theme and black
+   in a dark one. The border and the rules inside the card are a tint
+   too, so they keep their contrast over whatever shows through. */
+.orca-shelves {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-2-3);
+  padding: 0 var(--size-4-1);
+}
+
+.orca-shelf {
+  --orca-shelf-rule: rgba(var(--mono-rgb-100), 0.1);
+  border: 1px solid var(--orca-shelf-rule);
+  border-radius: var(--radius-m);
+  background: rgba(var(--mono-rgb-0), 0.4);
+}
+
+.orca-shelf.is-open {
+  background: rgba(var(--mono-rgb-0), 0.7);
+}
+
+.theme-dark .orca-shelf {
+  background: rgba(var(--mono-rgb-0), 0.12);
+}
+
+.theme-dark .orca-shelf.is-open {
+  background: rgba(var(--mono-rgb-0), 0.22);
+}
+
+.orca-shelf:focus-visible {
+  outline: none;
+}
+
+/* Every row is one height, whatever it carries. */
+.orca-nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--size-4-1);
+  height: 26px;
+  padding: 0 var(--size-4-2);
+  border-radius: var(--radius-s);
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* A finger that scrolls the list is over a row and points at none, so a
+   row is lit only while the pointer over the list is one that hovers.
+   `:where` keeps the rule as light as it was, and a selected row keeps
+   its own fill. */
+:where(.orca-navigator.is-pointed) .orca-nav-item:hover {
+  background: var(--background-modifier-hover);
+}
+
+/* The ring shows for a focus given by script as well as by the keyboard:
+   the book page focuses an entry here, and the author has to see where
+   it went. */
+.orca-entry:focus,
+.orca-outline:focus {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--color-accent);
+}
+
+.orca-nav-item.is-active {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+/* The row for the page the preview shows. */
+.orca-nav-item.is-selected {
+  background: hsla(var(--accent-h), var(--accent-s), var(--accent-l), 0.15);
+  color: var(--text-normal);
+}
+
+/* The row under the pointer is the row that lands, so it is lifted
+   where it sits. */
+.orca-nav-item.is-dragged,
+.orca-nav-heading.is-dragged {
+  position: relative;
+  z-index: 1;
+  border-radius: var(--radius-s);
+  background: var(--background-primary);
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.35),
+    0 0 0 1px var(--color-accent);
+  color: var(--text-normal);
+  cursor: grabbing;
+}
+
+.orca-nav-heading.is-dragged::after {
+  display: none;
+}
+
+/* An entry drags with the headings inside its note. */
+.orca-entry-tree.is-dragged {
+  position: relative;
+  z-index: 1;
+  border-radius: var(--radius-s);
+  background: var(--background-primary);
+}
+
+/* A heading is text in the note, so its row reads quieter than an
+   entry and carries no handle. */
+.orca-outline {
+  height: 24px;
+  color: var(--text-faint);
+  font-size: var(--font-ui-smaller);
+}
+
+:where(.orca-navigator.is-pointed) .orca-outline:hover {
+  color: var(--text-muted);
+}
+
+.orca-entry-mark .orca-fold {
+  cursor: pointer;
+}
+
+.orca-shelf-name {
+  height: 32px;
+  border-radius: calc(var(--radius-m) - 1px);
+  color: var(--text-normal);
+  font-weight: var(--font-semibold);
+}
+
+/* An open book's row is the head of its card. */
+.orca-shelf.is-open > .orca-shelf-name {
+  border-bottom: 1px solid var(--orca-shelf-rule);
+  border-radius: calc(var(--radius-m) - 1px) calc(var(--radius-m) - 1px) 0 0;
+}
+
+.orca-shelf-icon {
+  display: flex;
+  flex: none;
+  color: var(--text-accent);
+  --icon-size: var(--icon-xs);
+}
+
+.orca-fold {
+  display: flex;
+  flex: none;
+  color: var(--text-faint);
+  --icon-size: var(--icon-xs);
+}
+
+.orca-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.orca-nav-children {
+  padding: 0 var(--size-4-1) var(--size-2-3);
+}
+
+/* A section reads as a divider, so it is never mistaken for a row. Its
+   rule has the card's border color. */
+.orca-nav-heading {
+  display: flex;
+  align-items: center;
+  gap: var(--size-4-2);
+  height: 24px;
+  margin-top: var(--size-4-2);
+  padding: 0 var(--size-4-2);
+  color: var(--text-faint);
+  font-size: 10px;
+  font-weight: var(--font-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: grab;
+}
+
+.orca-nav-heading::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--orca-shelf-rule);
+}
+
+.orca-heading-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.orca-rename {
+  height: 20px;
+  padding: 0 var(--size-4-1);
+  font-size: var(--font-ui-smaller);
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+/* A fixed slot, so every label starts at the same edge. */
+.orca-entry-mark {
+  display: flex;
+  flex: none;
+  width: 14px;
+  --icon-size: var(--icon-xs);
+}
+
+.orca-entry[data-kind="generated"] {
+  color: var(--text-faint);
+  font-style: italic;
+}
+
+.orca-entry[data-kind="generated"] .orca-entry-mark {
+  color: var(--text-faint);
+}
+
+.orca-entry[data-kind="missing"] .orca-entry-mark {
+  color: var(--color-orange);
+}
+
+.orca-entry[data-kind="missing"] .orca-label {
+  text-decoration: line-through;
+}
+
+.orca-chip {
+  flex: none;
+  margin-left: auto;
+  padding: 0 7px;
+  border-radius: var(--pill-radius);
+  background: var(--background-modifier-hover);
+  color: var(--text-accent);
+  font-size: var(--font-ui-smaller);
+  font-style: normal;
+}
+
+.orca-entry[data-kind="generated"] .orca-chip {
+  background: none;
+  color: var(--text-faint);
+}
+
+.orca-nav-actions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+}
+
+/*
+ * An icon with no fill of its own until the pointer is on it. Obsidian
+ * fills every button that is not one of its own clickable icons, and
+ * that rule is as specific as a class, so this one is written to match
+ * it rather than to be outweighed by it.
+ */
+button.orca-nav-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-s);
+  box-shadow: none;
+  background: none;
+  color: var(--text-faint);
+  cursor: pointer;
+  --icon-size: var(--icon-xs);
+}
+
+/* The icon's own span is as tall as a line of text, which is taller
+   than the icon and would set it above the middle. */
+button.orca-nav-action > span,
+.orca-nav-host .nav-action-button > span,
+.orca-fold > span,
+.orca-shelf-icon > span,
+button.orca-panel-glyph > .orca-panel-icon {
+  display: flex;
+}
+
+:where(.orca-navigator.is-pointed) button.orca-nav-action:hover {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+/* The book's own `+` is quiet until the row is under the pointer. */
+.orca-shelf-name .orca-nav-actions {
+  opacity: 0;
+}
+
+.orca-shelf-name:hover .orca-nav-actions,
+.orca-shelf-name:focus-within .orca-nav-actions {
+  opacity: 1;
+}
+
+/* The design panel. A row is a 96px label with its controls beside it.
+   At sidebar width, the label is above its controls. The panel is the
+   container that the rows' container queries measure. */
+.orca-panel-host {
+  height: 100%;
+}
+
+/* In the CSS view the header stays and the editor gets the rest of the
+   column. */
+.orca-design.is-css {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.orca-design.is-css .orca-panel-host {
+  height: auto;
+  flex: none;
+}
+
+.orca-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding-block: 2px var(--size-4-3);
+  color: var(--text-faint);
+  font-size: 11px;
+}
+
+.orca-panel-title {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* The icon's span is a flex box, so no line box sits under the icon
+   and it centers on the hover square. */
+.orca-panel-action {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+}
+
+.orca-panel-action-icon {
+  display: flex;
+}
+
+.orca-panel-book {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.orca-design.is-css .orca-panel {
+  padding-bottom: 0;
+}
+
+.orca-editor-host {
+  flex: 1;
+  min-height: 0;
+  margin: 0 var(--size-4-3) var(--size-4-3);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-m);
+  background: var(--background-primary);
+  overflow: hidden;
+}
+
+.orca-editor-host .cm-editor {
+  height: 100%;
+}
+
+.orca-editor-host .cm-editor.cm-focused {
+  outline: none;
+}
+
+.orca-editor-host .cm-scroller {
+  padding-block: 9px;
+  font-family: var(--font-monospace);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+/* The gutter is opaque, so a line scrolled sideways passes behind it. */
+.orca-editor-host .cm-gutters {
+  border: none;
+  background: var(--background-primary);
+  color: var(--text-faint);
+}
+
+.orca-editor-host .cm-lineNumbers .cm-gutterElement {
+  min-width: 25px;
+  padding: 0 3px 0 0;
+}
+
+.orca-editor-host .cm-activeLine {
+  background: hsla(var(--interactive-accent-hsl), 0.09);
+}
+
+.orca-editor-host .cm-activeLineGutter {
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.orca-editor-host .cm-content {
+  caret-color: var(--text-normal);
+}
+
+/* CodeMirror's base theme carries its own colors, so each rule here
+   names .cm-editor to outrank it. */
+.orca-editor-host .cm-editor .cm-cursor {
+  border-left-color: var(--text-normal);
+}
+
+.orca-editor-host .cm-editor .cm-selectionBackground,
+.orca-editor-host .cm-editor.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground {
+  background: hsla(var(--interactive-accent-hsl), 0.25);
+}
+
+.orca-editor-host .cm-editor .cm-selectionMatch {
+  background: hsla(var(--interactive-accent-hsl), 0.14);
+}
+
+.orca-editor-host .cm-editor .cm-matchingBracket,
+.orca-editor-host .cm-editor.cm-focused .cm-matchingBracket {
+  background: hsla(var(--interactive-accent-hsl), 0.2);
+  color: var(--text-normal);
+  outline: 1px solid hsla(var(--interactive-accent-hsl), 0.5);
+}
+
+.orca-editor-host .cm-editor .cm-nonmatchingBracket,
+.orca-editor-host .cm-editor.cm-focused .cm-nonmatchingBracket {
+  background: transparent;
+  color: var(--color-red);
+}
+
+.orca-editor-host .cm-editor .cm-searchMatch {
+  background: rgba(var(--color-yellow-rgb), 0.3);
+  outline: none;
+}
+
+.orca-editor-host .cm-editor .cm-searchMatch.cm-searchMatch-selected {
+  background: rgba(var(--color-orange-rgb), 0.45);
+}
+
+.orca-editor-host .cm-foldGutter .cm-gutterElement {
+  display: flex;
+  align-items: center;
+  width: 14px;
+  color: var(--text-faint);
+  cursor: var(--cursor);
+}
+
+.orca-editor-fold {
+  display: flex;
+}
+
+.orca-editor-fold svg {
+  width: 12px;
+  height: 12px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* A rule that can fold shows its chevron while the pointer is over the
+   gutter, as Obsidian's own editor does. A folded one always shows. */
+.orca-editor-host .cm-gutters:not(:hover) [data-testid="orca-editor-fold"] {
+  visibility: hidden;
+}
+
+.orca-editor-host .cm-foldGutter .cm-gutterElement:hover {
+  color: var(--text-muted);
+}
+
+.orca-editor-host .cm-editor .cm-foldPlaceholder {
+  margin: 0 2px;
+  padding: 0 4px;
+  border: none;
+  border-radius: var(--radius-s);
+  background: var(--background-modifier-hover);
+  color: var(--text-muted);
+}
+
+.orca-editor-host .cm-editor .cm-panels {
+  background: var(--background-primary);
+  color: var(--text-normal);
+}
+
+.orca-editor-host .cm-editor .cm-panels-top {
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.orca-search {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-4-1);
+  padding: var(--size-4-2);
+  font-family: var(--font-interface);
+}
+
+.orca-search-row {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.orca-search .orca-search-field {
+  flex: 1;
+  min-width: 0;
+  height: 24px;
+  margin-right: var(--size-4-1);
+  padding: 0 var(--size-4-2);
+  font-size: var(--font-ui-smaller);
+}
+
+.orca-search .orca-search-button {
+  padding: 4px;
+}
+
+.orca-search .orca-search-button svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.orca-search .orca-search-button.is-active {
+  background: var(--background-modifier-hover);
+  color: var(--text-accent);
+}
+
+.orca-editor-host .tok-keyword {
+  color: var(--color-orange);
+}
+
+.orca-editor-host .tok-propertyName {
+  color: var(--color-cyan);
+}
+
+.orca-editor-host .tok-number,
+.orca-editor-host .tok-string,
+.orca-editor-host .tok-atom,
+.orca-editor-host .tok-unit {
+  color: var(--color-purple);
+}
+
+.orca-editor-host .tok-className,
+.orca-editor-host .tok-typeName,
+.orca-editor-host .tok-labelName,
+.orca-editor-host .tok-variableName {
+  color: var(--color-red);
+}
+
+.orca-editor-host .tok-punctuation {
+  color: var(--text-muted);
+}
+
+.orca-editor-host .tok-comment {
+  color: var(--text-faint);
+}
+
+.orca-panel-warned {
+  flex: none;
+  color: var(--color-orange);
+}
+
+.orca-editor-host .orca-editor-flag {
+  /* Chrome 124 draws these in full. caniuse's partial mark is for
+     text-decoration-skip, which orca does not use. */
+  /* stylelint-disable plugin/no-unsupported-browser-features */
+  text-decoration: underline wavy var(--color-orange);
+  text-decoration-thickness: 1px;
+  /* stylelint-enable plugin/no-unsupported-browser-features */
+  text-underline-offset: 3px;
+}
+
+.orca-editor-host .cm-lineNumbers .cm-gutterElement.orca-editor-flagged {
+  color: var(--color-orange);
+}
+
+/* The CSS editor's completion list. Obsidian hides an option's detail,
+   and here the detail is the syntax, on a line under the label. */
+.cm-tooltip.cm-tooltip-autocomplete.orca-completion > ul > li[role="option"] {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  white-space: nowrap;
+}
+
+.cm-tooltip.cm-tooltip-autocomplete.orca-completion .cm-completionDetail {
+  display: block;
+  grid-column: 2;
+  margin-left: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-style: normal;
+  font-size: var(--font-ui-smaller);
+  color: var(--text-muted);
+}
+
+.orca-completion-icon {
+  display: flex;
+  align-items: center;
+  margin-inline-end: var(--size-4-2);
+  color: var(--text-faint);
+  --icon-size: var(--icon-xs);
+  --icon-stroke: var(--icon-xs-stroke-width);
+}
+
+/* CodeMirror wraps the editor's card in its own tooltip box. The card
+   draws the box itself. */
+.cm-tooltip.cm-tooltip-hover.orca-card-host,
+.cm-tooltip.orca-card-host {
+  padding: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* A card over a squiggle or a lock. Both are drawn on the body, because
+   the editor and the panel clip overflow. */
+.orca-card {
+  max-width: 320px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-m);
+  background: var(--background-secondary);
+  box-shadow: var(--shadow-s);
+  overflow: hidden;
+}
+
+.orca-card.mod-floating {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--layer-tooltip);
+  pointer-events: none;
+}
+
+.orca-card-row {
+  display: flex;
+  gap: 8px;
+  padding: 8px 12px;
+  border-left: 2px solid var(--card-stripe);
+  font-family: var(--font-interface);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.orca-card-row.mod-warning {
+  --card-stripe: var(--color-orange);
+}
+
+.orca-card-row.mod-overridden {
+  --card-stripe: var(--interactive-accent);
+}
+
+.orca-card-row + .orca-card-row {
+  border-top: 1px solid var(--background-modifier-border);
+}
+
+.orca-card-icon {
+  display: flex;
+  flex: none;
+  width: 14px;
+  height: 14px;
+  margin-top: 1px;
+  color: var(--card-stripe);
+}
+
+svg.orca-card-icon,
+.orca-card-icon > svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.orca-card-body {
+  min-width: 0;
+}
+
+.orca-card-said {
+  color: var(--text-normal);
+  overflow-wrap: anywhere;
+}
+
+.orca-card-said code {
+  font-family: var(--font-monospace);
+  font-size: 11.5px;
+}
+
+.orca-card-at {
+  margin-top: 2px;
+  color: var(--text-faint);
+  font-family: var(--font-monospace);
+  font-size: 11px;
+}
+
+/* The inspect pane sits over the editor. It scrolls on its own, so a
+   box with many rules leaves the editor room. */
+.orca-inspect-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  max-height: 45vh;
+  margin-bottom: var(--size-4-3);
+  padding: 10px 10px 12px;
+  overflow-y: auto;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-m);
+  background: var(--background-primary);
+  color: var(--text-normal);
+  font-size: var(--font-ui-small);
+}
+
+.orca-inspect-top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.orca-inspect-icon {
+  display: flex;
+  flex: none;
+  --icon-size: 14px;
+}
+
+.orca-inspect-top > .orca-inspect-icon {
+  color: var(--text-accent);
+}
+
+.orca-inspect-close {
+  flex: none;
+  padding: 3px;
+}
+
+.orca-inspect-crumbs {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+  color: var(--text-faint);
+  font-family: var(--font-monospace);
+  font-size: 11px;
+}
+
+.orca-inspect-crumb-slot {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+button.orca-inspect-crumb {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  height: auto;
+  padding: 2px 5px;
+  border-radius: var(--radius-s);
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: inherit;
+  cursor: var(--cursor);
+}
+
+button.orca-inspect-crumb:disabled {
+  opacity: 1;
+  cursor: default;
+}
+
+button.orca-inspect-crumb:not(:disabled):hover {
+  background: var(--background-modifier-hover);
+}
+
+.orca-inspect-crumb i {
+  color: var(--text-faint);
+  font-family: var(--font-interface);
+  font-size: 10px;
+  font-style: normal;
+}
+
+button.orca-inspect-crumb.is-active {
+  background: hsla(var(--interactive-accent-hsl), 0.15);
+  color: var(--text-normal);
+}
+
+.orca-inspect-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.orca-inspect-origin {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  color: var(--text-faint);
+  font-size: 10px;
+  font-weight: var(--font-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.orca-inspect-origin::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--divider-color);
+}
+
+.orca-inspect-rule {
+  padding: 4px 8px;
+  border-radius: var(--radius-s);
+  background: rgba(var(--mono-rgb-100), 0.03);
+  font-family: var(--font-monospace);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.orca-inspect-rule-h {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.orca-inspect-sel {
+  min-width: 0;
+  color: var(--color-red);
+  overflow-wrap: anywhere;
+}
+
+.orca-inspect-src {
+  margin-left: auto;
+  color: var(--text-accent);
+  font-family: var(--font-interface);
+  font-size: 10.5px;
+  white-space: nowrap;
+}
+
+button.orca-inspect-src {
+  height: auto;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  cursor: var(--cursor);
+}
+
+button.orca-inspect-src:hover {
+  text-decoration: underline;
+}
+
+.orca-inspect-src.is-faint {
+  color: var(--text-faint);
+}
+
+.orca-inspect-decl {
+  padding-left: 12px;
+}
+
+.orca-inspect-p {
+  color: var(--color-cyan);
+}
+
+.orca-inspect-v {
+  color: var(--color-purple);
+}
+
+.orca-inspect-decl.is-lost {
+  opacity: 0.55;
+  text-decoration: line-through;
+}
+
+.orca-inspect-decl.is-skipped .orca-inspect-p,
+.orca-inspect-decl.is-skipped .orca-inspect-v {
+  /* Chrome 124 draws these in full. caniuse's partial mark is for
+     text-decoration-skip, which orca does not use. */
+  /* stylelint-disable plugin/no-unsupported-browser-features */
+  text-decoration: underline wavy var(--color-orange);
+  text-decoration-thickness: 1px;
+  /* stylelint-enable plugin/no-unsupported-browser-features */
+  text-underline-offset: 3px;
+}
+
+.orca-inspect-said {
+  color: var(--text-muted);
+  font-family: var(--font-interface);
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+
+.orca-inspect-computed {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3px 12px;
+  font-size: 11.5px;
+}
+
+.orca-inspect-label {
+  color: var(--text-faint);
+}
+
+.orca-inspect-value {
+  color: var(--text-normal);
+  font-family: var(--font-monospace);
+  font-size: 11px;
+}
+
+.orca-inspect-add-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+button.orca-inspect-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 26px;
+  padding: 0 10px;
+  font-size: var(--font-ui-small);
+  font-weight: var(--font-medium);
+}
+
+.orca-inspect-selector {
+  font-family: var(--font-monospace);
+  font-weight: var(--font-normal);
+}
+
+.orca-inspect-note {
+  color: var(--text-faint);
+  font-size: 11.5px;
+}
+
+.orca-panel {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--size-4-3) var(--size-4-3);
+}
+
+.orca-panel-empty {
+  padding: var(--size-4-3);
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+}
+
+/* A rule separates a group from the one above it. The group name is
+   brighter than the muted row labels, so the reader sees the group
+   first. */
+.orca-panel-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-4-3);
+  min-width: 0;
+  padding-block: var(--size-4-4);
+  border-top: 1px solid var(--background-modifier-border);
+}
+
+.orca-panel-group:first-child {
+  border-top: none;
+}
+
+.orca-panel-heading {
+  display: flex;
+  align-items: center;
+  gap: var(--size-4-2);
+}
+
+.orca-panel-name {
+  color: var(--text-normal);
+  font-size: var(--font-ui-small);
+  font-weight: var(--font-semibold);
+}
+
+/* The heading levels are a tab strip over the rows under them, not a
+   segment. A level is a place in the group, not a setting. */
+.orca-panel-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+button.orca-panel-tab {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 28px;
+  margin-bottom: -1px;
+  padding: 0;
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+  cursor: pointer;
+}
+
+button.orca-panel-tab:hover {
+  color: var(--text-normal);
+}
+
+button.orca-panel-tab.is-on {
+  border-bottom-color: var(--interactive-accent);
+  color: var(--text-normal);
+  font-weight: var(--font-semibold);
+}
+
+.orca-panel-line {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.orca-panel-row {
+  display: flex;
+  align-items: center;
+  gap: var(--size-4-2);
+  min-height: 26px;
+  min-width: 0;
+}
+
+.orca-panel-label {
+  width: 96px;
+  flex: none;
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+}
+
+.orca-panel-controls {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--size-4-2);
+  min-width: 0;
+}
+
+/* The margins are two to a line, and each field has its side under it. */
+.orca-panel-row.mod-grid {
+  align-items: flex-start;
+}
+
+.orca-panel-row.mod-grid > .orca-panel-label {
+  padding-top: 7px;
+}
+
+.orca-panel-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px var(--size-4-2);
+  max-width: 320px;
+}
+
+.orca-panel-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+/* A custom trim's width and height take a line of their own under the
+   trim's dropdown. */
+.orca-panel-size {
+  flex-basis: 100%;
+}
+
+/* A control that takes no input dims where it sits: one whose key sets
+   nothing yet, or one the author's CSS overrides. */
+.orca-panel-label.is-inactive,
+.orca-panel-controls.is-inactive,
+.orca-panel-cell.is-inactive {
+  opacity: 0.42;
+}
+
+/* A name for assistive technology that draws nothing. */
+.orca-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+button.orca-panel-overridden {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--size-2-1);
+  height: auto;
+  margin-left: auto;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-accent);
+  font-size: var(--font-ui-smaller);
+  white-space: nowrap;
+  cursor: var(--cursor);
+}
+
+button.orca-panel-overridden:hover {
+  color: var(--text-accent-hover);
+}
+
+.orca-panel-overridden-icon {
+  display: flex;
+}
+
+.orca-panel-overridden-icon > svg {
+  width: 11px;
+  height: 11px;
+}
+
+.orca-panel-row.mod-grid > .orca-panel-overridden {
+  margin-top: 7px;
+}
+
+.orca-panel-overridden + .orca-panel-reset-slot {
+  margin-left: 0;
+}
+
+/* A line under a row sits under its controls rather than its label. */
+.orca-panel-under {
+  margin-left: calc(96px + var(--size-4-2));
+  color: var(--text-faint);
+  font-size: var(--font-ui-smaller);
+}
+
+.orca-panel-under.mod-wrong {
+  color: var(--text-error);
+}
+
+.orca-panel-said,
+.orca-panel-unit,
+.orca-panel-means {
+  color: var(--text-faint);
+  font-size: var(--font-ui-smaller);
+}
+
+.orca-panel-unit,
+.orca-panel-means {
+  color: var(--text-muted);
+}
+
+.orca-panel-unit {
+  flex: none;
+}
+
+/* The text beside a switch wraps and does not widen its row. */
+.orca-panel-means {
+  flex: 1 1 8em;
+  min-width: 0;
+}
+
+/* Every row keeps the reset's slot, so a control does not move when its
+   reset appears or disappears. */
+.orca-panel-reset-slot {
+  display: flex;
+  flex: none;
+  width: 24px;
+  margin-left: auto;
+}
+
+/* The reset takes the slot's size, not Obsidian's icon padding. That
+   padding pushes it past the panel's edge. */
+.orca-panel-reset-slot > .orca-panel-reset {
+  justify-content: center;
+  width: 100%;
+  height: 24px;
+  padding: 0;
+}
+
+.orca-panel-row.mod-grid > .orca-panel-reset-slot {
+  margin-top: 3px;
+}
+
+select.orca-panel-select {
+  flex: 1;
+  min-width: 0;
+  max-width: 320px;
+  height: var(--input-height);
+  font-size: var(--font-ui-small);
+  text-overflow: ellipsis;
+}
+
+/* A cell stacks its control over its word, so the select keeps its own
+   height rather than taking the cell's. */
+.orca-panel-cell > select.orca-panel-select {
+  flex: none;
+}
+
+select.orca-panel-select.is-default {
+  color: var(--text-faint);
+}
+
+select.orca-panel-select option {
+  color: var(--text-normal);
+}
+
+/* A segment is one control with a word for each choice, and the choice
+   in force is lit. The words share the width and do not wrap. In a
+   narrow sidebar, a word ends in an ellipsis and the control stays on
+   one line. */
+.orca-panel-segment {
+  display: flex;
+  flex: 1 1 auto;
+  gap: 2px;
+  min-width: 0;
+  max-width: 320px;
+  padding: 2px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-s);
+  background: var(--background-secondary);
+}
+
+button.orca-panel-choice {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 24px;
+  padding: 0 var(--size-4-1);
+  border-radius: 3px;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+button.orca-panel-choice.is-on {
+  background: var(--interactive-normal);
+  color: var(--text-normal);
+}
+
+button.orca-panel-choice.is-on.is-default {
+  color: var(--text-faint);
+}
+
+/* A button fills its share of the segment, so the icon centers inside it. */
+button.orca-panel-choice > .orca-panel-icon {
+  display: flex;
+  margin: 0 auto;
+}
+
+.orca-panel-switch {
+  flex: none;
+}
+
+/* A number field has a stepper joined to the right end of its text. */
+.orca-panel-number {
+  display: inline-flex;
+  flex: none;
+}
+
+.orca-panel-cell > .orca-panel-number {
+  display: flex;
+}
+
+input.orca-panel-text {
+  height: var(--input-height);
+  font-size: var(--font-ui-small);
+}
+
+.orca-panel-number > input.orca-panel-text {
+  width: 60px;
+  border-radius: var(--input-radius) 0 0 var(--input-radius);
+}
+
+/* A page length has three decimal places, as in 0.125in. */
+.orca-panel-number.mod-page > input.orca-panel-text {
+  width: 76px;
+}
+
+.orca-panel-cell > .orca-panel-number > input.orca-panel-text {
+  flex: 1;
+  width: auto;
+  min-width: 0;
+}
+
+input.orca-panel-text.is-default {
+  color: var(--text-faint);
+}
+
+input.orca-panel-text.is-invalid,
+input.orca-panel-text.is-invalid:focus {
+  border-color: var(--text-error);
+}
+
+input.orca-panel-words {
+  flex: 1;
+  min-width: 0;
+  max-width: 320px;
+}
+
+.orca-panel-stepper {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+  width: 18px;
+  height: var(--input-height);
+  border: 1px solid var(--background-modifier-border);
+  border-left: none;
+  border-radius: 0 var(--input-radius) var(--input-radius) 0;
+  background: var(--interactive-normal);
+  color: var(--text-muted);
+}
+
+button.orca-panel-step {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+button.orca-panel-step:first-child {
+  border-top-right-radius: var(--input-radius);
+}
+
+button.orca-panel-step:last-child {
+  border-top: 1px solid var(--background-modifier-border);
+  border-bottom-right-radius: var(--input-radius);
+}
+
+button.orca-panel-step:hover {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+.orca-panel-step .orca-panel-icon {
+  display: flex;
+  --icon-size: 12px;
+}
+
+.orca-panel-glyphs {
+  position: relative;
+  min-width: 0;
+}
+
+.orca-panel-glyph-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--size-4-1);
+  min-width: 0;
+}
+
+button.orca-panel-glyph,
+input.orca-panel-glyph {
+  width: 34px;
+  height: var(--input-height);
+  padding: 0;
+  border-radius: var(--input-radius);
+  border: 1px solid var(--background-modifier-border);
+  box-shadow: none;
+  background: var(--background-modifier-form-field);
+  color: var(--text-normal);
+  font-family: var(--font-text);
+  font-size: var(--font-ui-medium);
+  cursor: pointer;
+}
+
+button.orca-panel-glyph.is-on,
+input.orca-panel-glyph.is-on {
+  box-shadow: 0 0 0 1.5px var(--color-accent);
+}
+
+button.orca-panel-glyph.is-on.is-default,
+input.orca-panel-glyph.is-on.is-default {
+  box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--color-accent) 40%, transparent);
+  color: var(--text-muted);
+}
+
+/* The browser's grid holds a fixed number of columns, because the
+   arrow keys step by that number. */
+.orca-panel-glyph-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--size-4-1);
+}
+
+.orca-panel-glyph-block + .orca-panel-glyph-block {
+  margin-top: var(--size-4-2);
+}
+
+.orca-panel-glyph-name {
+  padding: var(--size-4-1) var(--size-2-1);
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+}
+
+button.orca-panel-glyph-cell {
+  height: var(--input-height);
+  padding: 0;
+  border-radius: var(--input-radius);
+  border: 1px solid var(--background-modifier-border);
+  box-shadow: none;
+  background: var(--background-modifier-form-field);
+  color: var(--text-normal);
+  font-size: var(--font-ui-medium);
+  cursor: pointer;
+}
+
+button.orca-panel-glyph-cell.is-at {
+  background: var(--background-modifier-hover);
+}
+
+button.orca-panel-glyph-cell.is-on {
+  box-shadow: 0 0 0 1.5px var(--color-accent);
+}
+
+.orca-panel-glyph-more {
+  padding: var(--size-4-2);
+  color: var(--text-accent);
+  font-size: var(--font-ui-small);
+  cursor: pointer;
+}
+
+.orca-panel-glyph-count {
+  padding: var(--size-4-1) var(--size-4-2) 0;
+  color: var(--text-faint);
+  font-size: var(--font-ui-smaller);
+}
+
+/* The book note's page shows the design read-only, one row per group
+   of the panel, lined up with the metadata above it. A group is a grid
+   of its values, each under the label of the panel row that sets it. */
+.orca-book-design {
+  display: flex;
+  flex-direction: column;
+}
+
+.orca-book-summary {
+  display: flex;
+  flex-direction: column;
+}
+
+.orca-book-summary > .orca-book-row {
+  align-items: baseline;
+  padding-block: var(--size-4-2);
+}
+
+.orca-book-summary > .orca-book-row + .orca-book-row {
+  border-top: 1px solid var(--background-modifier-border);
+}
+
+.orca-book-facts {
+  display: grid;
+  flex: 1;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: var(--size-4-2) var(--size-4-4);
+  min-width: 0;
+  padding: 0 var(--size-4-2);
+}
+
+.orca-book-fact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-2-1);
+  min-width: 0;
+}
+
+/* A heading level and a row of several controls each begin a line, so
+   the values that belong together are read together. */
+.orca-book-fact.is-start {
+  grid-column-start: 1;
+}
+
+.orca-book-fact.is-wide {
+  grid-column-end: span 2;
+}
+
+.orca-book-fact-label {
+  color: var(--text-faint);
+  font-size: var(--font-ui-smaller);
+}
+
+.orca-book-fact-value {
+  color: var(--text-normal);
+  font-size: var(--font-ui-medium);
+}
+
+/* A value the book leaves at its default is muted, so the values the
+   author changed stand out. */
+.orca-book-fact.is-default > .orca-book-fact-value {
+  color: var(--text-muted);
+}
+
+button.orca-book-export {
+  display: flex;
+  align-items: center;
+  gap: var(--size-4-2);
+  align-self: flex-start;
+  margin-top: var(--size-4-2);
+}
+
+/* The export dialog, drawn after the Export artboard. */
+.orca-export-modal {
+  width: min(620px, calc(100vw - var(--size-4-8)));
+}
+
+/* The dialog is as tall as the screen allows, and the list of errors is
+   the one part of it that gives way and scrolls. */
+.orca-export-modal .modal-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.orca-export-host {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.orca-export {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--size-4-4);
+  min-height: 0;
+}
+
+.orca-export > * {
+  flex: none;
+}
+
+.orca-export-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-4-2);
+}
+
+.orca-export > .orca-export-preflight {
+  flex: 0 1 auto;
+  min-height: 0;
+}
+
+.orca-export-preflight > * {
+  flex: none;
+}
+
+.orca-export-preflight > .orca-export-list {
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: column;
+  gap: var(--size-4-2);
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.orca-export-list > * {
+  flex: none;
+}
+
+.orca-export-row {
+  display: flex;
+  align-items: center;
+  gap: var(--size-4-2);
+}
+
+.orca-export-label {
+  flex: none;
+  width: 88px;
+  font-size: var(--font-ui-small);
+  color: var(--text-muted);
+}
+
+.orca-export-destination {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-monospace);
+  font-size: var(--font-ui-small);
+}
+
+.orca-export-divider {
+  height: 1px;
+  background: var(--divider-color);
+}
+
+.orca-export-heading {
+  font-size: var(--font-ui-smaller);
+  font-weight: var(--font-semibold);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+/* The waiting row is the row the preflight's answer takes, at one line. */
+.orca-export-waiting .orca-export-fine-icon {
+  color: var(--text-faint);
+  animation: orca-export-turning 1.2s linear infinite;
+}
+
+.orca-export-waiting > span {
+  overflow: hidden;
+  min-width: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@keyframes orca-export-turning {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orca-export-waiting .orca-export-fine-icon {
+    animation: none;
+  }
+}
+
+.orca-preview-issue.orca-export-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  border-left-color: var(--color-red);
+  background: rgba(251, 70, 76, 0.09);
+}
+
+.orca-export-error-icon {
+  flex: none;
+  margin-top: 2px;
+  color: var(--color-red);
+}
+
+.orca-preview-issue.orca-export-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+}
+
+.orca-export-warning-icon {
+  flex: none;
+  margin-top: 2px;
+  color: var(--color-orange);
+}
+
+.orca-export-error-icon svg,
+.orca-export-warning-icon svg,
+.orca-export-fine-icon svg {
+  width: var(--icon-xs);
+  height: var(--icon-xs);
+}
+
+.orca-export-engine,
+.orca-export-at {
+  margin-top: 2px;
+  font-size: var(--font-ui-smaller);
+  color: var(--text-faint);
+}
+
+.orca-export-engine {
+  font-family: var(--font-monospace);
+}
+
+.orca-export-fine {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: var(--size-4-1) 10px;
+  font-size: var(--font-ui-small);
+  color: var(--text-muted);
+}
+
+.orca-export-fine-icon {
+  display: flex;
+  color: var(--color-green);
+}
+
+/* The bar lies in the gap over the footer and takes no room of its
+   own, so nothing moves when it comes or goes. */
+.orca-export-progress {
+  --orca-export-bar: 2px;
+  height: var(--orca-export-bar);
+  margin-block: calc((var(--size-4-4) + var(--orca-export-bar)) / -2);
+  overflow: hidden;
+  background: var(--background-modifier-border);
+}
+
+/* The engine reports no progress while it writes, so the bar runs rather than fills. */
+.orca-export-progress-bar {
+  width: 38%;
+  height: 100%;
+  background: var(--interactive-accent);
+  animation: orca-export-running 1.2s ease-in-out infinite;
+}
+
+@keyframes orca-export-running {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(270%);
+  }
+}
+
+.orca-export-footer {
+  align-items: center;
+}
+
+.orca-export-said {
+  flex: 1;
+  margin-right: auto;
+  text-align: left;
+  font-size: var(--font-ui-smaller);
+  color: var(--text-muted);
+}
+
+.orca-export-said.mod-error {
+  color: var(--color-red);
+}
+
+.orca-export-mono {
+  font-family: var(--font-monospace);
+}
+
+.orca-export-written {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-4-1);
+}
+
+/* One row per file the export wrote. */
+.orca-export-done {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: var(--size-4-2) 0;
+}
+
+.orca-export-done-icon {
+  display: flex;
+  flex: none;
+  color: var(--color-green);
+}
+
+.orca-export-done-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.orca-export-done-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--font-ui-small);
+  color: var(--text-normal);
+}
+
+.orca-export-done-size {
+  flex: none;
+  font-family: var(--font-monospace);
+  font-size: var(--font-ui-smaller);
+  color: var(--text-faint);
+}
+
+.orca-export-format {
+  display: flex;
+  align-items: center;
+  gap: var(--size-4-1);
+  font-size: var(--font-ui-small);
+  color: var(--text-normal);
+}
+
+.orca-export-formats {
+  gap: var(--size-4-4);
+}
+
+/* The files the export will write, under the path they share. */
+.orca-export-files {
+  padding-left: calc(88px + var(--size-4-2));
+  font-family: var(--font-monospace);
+  font-size: var(--font-ui-smaller);
+  color: var(--text-faint);
+}
+
+/* The picker is the field's positioning context, so the menu hangs
+   from the field rather than from the pane. */
+.orca-panel-picker {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  max-width: 320px;
+}
+
+button.orca-panel-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--size-4-1);
+  width: 100%;
+  height: var(--input-height);
+  padding: 0 var(--size-4-2);
+  border-radius: var(--input-radius);
+  background: var(--interactive-normal);
+  border: 1px solid transparent;
+  box-shadow: none;
+  color: var(--text-normal);
+  font-size: var(--font-ui-small);
+  text-align: left;
+  cursor: pointer;
+}
+
+.orca-panel-family {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+button.orca-panel-field.is-default .orca-panel-family {
+  color: var(--text-faint);
+}
+
+/* A font the book adds reads as a name, not a control, because nothing
+   is picked in it. It is drawn in its own face. */
+.orca-panel-field.is-added {
+  flex: 1;
+  min-width: 0;
+  max-width: 320px;
+  height: var(--input-height);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--size-4-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-normal);
+  font-size: var(--font-ui-small);
+}
+
+.orca-panel-menu {
+  position: absolute;
+  z-index: var(--layer-menu);
+  top: calc(var(--input-height) + 4px);
+  left: 0;
+  right: 0;
+  padding: var(--size-4-1);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-m);
+  background: var(--background-secondary);
+  box-shadow: var(--shadow-s);
+}
+
+input.orca-panel-filter {
+  width: 100%;
+  height: 26px;
+  min-height: 26px;
+  font-size: var(--font-ui-small);
+}
+
+/* The list is bounded rather than as long as the machine's font
+   folders, which on a Mac hold six hundred files. */
+.orca-panel-rows {
+  max-height: 260px;
+  overflow-y: auto;
+  margin-top: var(--size-4-1);
+}
+
+.orca-panel-option {
+  padding: 0 var(--size-4-2);
+  height: 28px;
+  display: flex;
+  align-items: center;
+  border-radius: var(--radius-s);
+  color: var(--text-normal);
+  font-size: var(--font-ui-medium);
+  cursor: pointer;
+}
+
+.orca-panel-option.is-on,
+.orca-panel-option:hover {
+  background: var(--background-modifier-hover);
+}
+
+.orca-panel-none {
+  padding: var(--size-4-2);
+  color: var(--text-faint);
+  font-size: var(--font-ui-small);
+}
+
+.orca-panel-icon {
+  flex: none;
+  --icon-size: var(--icon-xs);
+}
+
+/* At sidebar width, each label is above its controls. It is closer to
+   them than to the row above, so the reader can see which control it
+   names. The controls wrap. In a wider panel, the labels stay in a
+   column. */
+@container (max-width: 360px) {
+  .orca-panel-row {
+    flex-wrap: wrap;
+    row-gap: var(--size-4-1);
+  }
+
+  .orca-panel-label {
+    width: 100%;
+  }
+
+  .orca-panel-label:empty {
+    display: none;
+  }
+
+  .orca-panel-row.mod-grid > .orca-panel-label {
+    padding-top: 0;
+  }
+
+  .orca-panel-under {
+    margin-left: 0;
+  }
+}
+
+/* In a panel too narrow for two margins side by side, the margins stack. */
+@container (max-width: 200px) {
+  .orca-panel-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Inspect mode. The header action is Obsidian's own, marked while it is
+   on. The paper is light in both themes, so the tints are mixed from the
+   ramp rather than themed. */
+.workspace-leaf-content[data-type="orca-book-preview"] .view-action.is-active {
+  color: var(--text-accent);
+  background: var(--background-modifier-hover);
+}
+
+.orca-preview-sheets[data-inspect="on"] {
+  cursor: crosshair;
+}
+
+/* A sibling of the sheets, so a paint that rewrites them leaves it. */
+.orca-inspect-host {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* A zoomed page is cut at the edge of the sheets, inside the well's
+   padding, so the boxes drawn over it are cut at the same edge. */
+.orca-preview-sheets.is-zoomed + .orca-inspect-host {
+  inset: var(--orca-well-pad);
+  overflow: hidden;
+}
+
+.orca-inspect-frame,
+.orca-inspect {
+  position: absolute;
+  pointer-events: none;
+}
+
+.orca-inspect-margin {
+  background: color-mix(in srgb, var(--color-yellow) 26%, transparent);
+}
+
+.orca-inspect-padding {
+  background: color-mix(in srgb, var(--color-green) 22%, transparent);
+}
+
+.orca-inspect-content {
+  background: hsla(258, 88%, 66%, 0.16);
+}
+
+.orca-inspect-edge {
+  box-sizing: border-box;
+  outline: 1px dashed hsla(258, 88%, 60%, 0.9);
+}
+
+.orca-inspect-edge.is-pinned {
+  outline: 1.5px solid hsl(258, 88%, 60%);
+}
+
+/* A fragment is open on the side the page cut. */
+.orca-inspect-edge.is-cut-top,
+.orca-inspect-edge.is-cut-bottom,
+.orca-inspect-edge.is-cut-both {
+  outline: none;
+  border: 1.5px solid hsl(258, 88%, 60%);
+}
+
+.orca-inspect-edge:not(.is-pinned).is-cut-top,
+.orca-inspect-edge:not(.is-pinned).is-cut-bottom,
+.orca-inspect-edge:not(.is-pinned).is-cut-both {
+  border-style: dashed;
+}
+
+.orca-inspect-edge.is-cut-top,
+.orca-inspect-edge.is-cut-both {
+  border-top-color: transparent;
+}
+
+.orca-inspect-edge.is-cut-bottom,
+.orca-inspect-edge.is-cut-both {
+  border-bottom-color: transparent;
+}
+
+.orca-inspect-tag {
+  position: absolute;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.88);
+  color: #dadada;
+  font-family: var(--font-monospace);
+  font-size: 10.5px;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transform: translate(-2px, calc(-100% - 3px));
+}
+
+.orca-inspect-tag b {
+  font-weight: var(--font-normal);
+  color: #b89cff;
+}
+
+.orca-inspect-tag i {
+  font-style: normal;
+  color: #8a8a8a;
+}
+
+/* The chips over fleuron's attribute runs, in the editor and in
+   reading view. The book's own pages are set by the engine and take
+   none of this. */
+
+.orca-run {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  padding: 0 7px;
+  border-radius: var(--pill-radius);
+  background: var(--background-modifier-hover);
+  font-family: var(--font-monospace);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: var(--font-normal);
+  line-height: 1.5;
+  white-space: nowrap;
+  vertical-align: baseline;
+}
+
+.orca-run b {
+  font-weight: var(--font-normal);
+  color: var(--text-accent);
+}
+
+.orca-run i {
+  font-style: normal;
+  color: var(--text-faint);
+}
+
+/* A run the engine read and cannot use is drawn as it was written. */
+.orca-run em {
+  font-style: normal;
+  color: var(--text-muted);
+}
+
+/* An image's run names the picture above it rather than the prose
+   beside it. */
+.orca-run[data-form="image"] {
+  display: flex;
+  width: fit-content;
+  margin-top: 5px;
+}
+
+.orca-run[data-form="line"] {
+  display: flex;
+  width: fit-content;
+}
+
+.orca-run[data-form="heading"],
+.orca-run[data-form="span"] {
+  margin-left: 4px;
+}
+
+/* A setext heading, which Obsidian draws as a paragraph once it runs
+   to more than one line. */
+.cm-line.orca-setext {
+  line-height: 1.3;
+}
+
+.cm-line.orca-setext-1 {
+  font-family: var(--h1-font);
+  font-size: var(--h1-size);
+  font-weight: var(--h1-weight);
+  font-style: var(--h1-style);
+  color: var(--h1-color);
+}
+
+.cm-line.orca-setext-2 {
+  font-family: var(--h2-font);
+  font-size: var(--h2-size);
+  font-weight: var(--h2-weight);
+  font-style: var(--h2-style);
+  color: var(--h2-color);
+}
+
+/* The underline stays, because the line is still there to type on. */
+.cm-line.orca-setext-under {
+  font-family: var(--font-monospace);
+  font-size: var(--font-smaller);
+  color: var(--text-faint);
+}
+
+/* The words a span run closes. The brackets are gone, and Obsidian
+   colours what they held the way it colours a link. */
+.cm-line .orca-span {
+  color: var(--text-normal);
+}
+
+/* The rule a break command draws across the measure, named for the
+   command it came from in the chips' own vocabulary. */
+
+.orca-break {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  color: var(--text-faint);
+}
+
+.orca-break::before,
+.orca-break::after {
+  content: "";
+  flex: 1;
+  border-top: 1px solid var(--background-modifier-border);
+}
+
+.orca-break i {
+  font-family: var(--font-monospace);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: var(--font-normal);
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+/* The two rules read apart at a glance. */
+.orca-break[data-form="columnbreak"]::before,
+.orca-break[data-form="columnbreak"]::after {
+  border-top-style: dashed;
+}
+
+.orca-preview-setting.mod-empty button {
+  margin-top: 2px;
+}
+
+/* The painter's selection layer sits over every link, so the cursor is
+   set on the whole surface while the pointer is over one. */
+.orca-preview-sheets.is-on-link,
+.orca-preview-sheets.is-on-link * {
+  cursor: var(--cursor-link);
+}
+
+/* mobile: book page */
+/* Obsidian mobile pads the view by 12px, and the page's own padding
+   brings the sides to the 24px the artboard draws. */
+.is-mobile .orca-book {
+  padding: var(--size-4-1) var(--size-4-3);
+}
+
+.is-phone .orca-book {
+  padding-block: 0;
+}
+
+.is-mobile .orca-book-name {
+  font-size: 28px;
+}
+
+.is-mobile .orca-book-line {
+  flex-wrap: wrap;
+}
+
+/* A phone has no room for a group's name beside its values, so the
+   name is over them. */
+.is-phone .orca-book-summary > .orca-book-row {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--size-4-2);
+}
+
+.is-phone .orca-book-summary .orca-book-label {
+  width: auto;
+}
+
+.is-phone .orca-book-facts {
+  padding: 0;
+}
+
+.is-mobile button.orca-book-export {
+  justify-content: center;
+  min-height: var(--touch-size-m);
+  margin-top: var(--size-4-3);
+}
+
+.is-phone button.orca-book-export {
+  align-self: stretch;
+  width: 100%;
+}
+
+.is-mobile .orca-book-metadata {
+  gap: 0;
+}
+
+.is-mobile .orca-book-label {
+  flex: none;
+  width: 7.5em;
+}
+
+.is-mobile .orca-book input.orca-book-value {
+  min-width: 0;
+  height: var(--touch-size-m);
+}
+
+/* A finger leaves a hover behind it, so a touch marks nothing. */
+.is-mobile .orca-book input.orca-book-value:hover:not(:focus),
+.is-mobile .orca-book button.orca-cover-pick:hover {
+  background: none;
+}
+
+.is-mobile .orca-cover-clear {
+  flex: none;
+  width: var(--touch-size-m);
+  height: var(--touch-size-m);
+}
+
+/* A phone's column has no room for the size beside the folder. */
+.is-phone .orca-cover-size {
+  display: none;
+}
+
+.is-mobile .orca-order {
+  border-radius: var(--touch-radius-xxs);
+}
+
+.is-mobile .orca-order-columns,
+.is-mobile .orca-order-row {
+  grid-template-columns: 1fr 64px 76px;
+  align-items: center;
+}
+
+.is-mobile .orca-order-row {
+  min-height: var(--touch-size-m);
+}
+
+.is-mobile .orca-order-row:hover {
+  background: none;
+  color: var(--text-muted);
+}
+
+.is-mobile .orca-book-refused button {
+  min-height: var(--touch-size-m);
+}
+
+/* mobile: sheets. A sheet is Obsidian's modal, docked to the foot of a
+   phone's screen. The keyboard does not shrink the modal's container,
+   so the sheet ends above it. A sheet is never as tall as the screen:
+   the page stays in sight over it, and what does not fit scrolls. */
+.is-phone .modal-container.orca-sheet {
+  bottom: var(--keyboard-height, 0px);
+}
+
+.is-phone .modal-container.orca-sheet .modal {
+  --dialog-max-height: calc((100vh - var(--keyboard-height, 0px)) * 0.8);
+}
+
+.is-phone .orca-sheet .modal-header {
+  padding-top: 0;
+}
+
+.is-phone .orca-sheet .modal-title {
+  width: 100%;
+  max-width: 100%;
+  overflow: visible;
+}
+
+/* The grabber is as tall as a touch, and the title is drawn over its
+   lower part. */
+.orca-sheet-grabber {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  height: var(--touch-size-m);
+  margin-bottom: calc(var(--size-4-6) - var(--touch-size-m));
+  cursor: pointer;
+}
+
+.orca-sheet-grabber .menu-grabber {
+  flex: none;
+  width: 15%;
+  margin-bottom: 0;
+}
+
+.orca-sheet-title {
+  position: relative;
+  pointer-events: none;
+}
+
+.modal-container.orca-sheet-clear .modal-bg {
+  background-color: transparent;
+}
+
+.is-phone .orca-warnings > .modal-content,
+.is-phone .orca-reader-sheet > .modal-content {
+  padding-bottom: calc(var(--size-4-4) + var(--safe-area-inset-bottom));
+}
+
+.is-phone .orca-reader-sheet .orca-reflow-popover {
+  position: static;
+  width: auto;
+  max-width: none;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+/* The well gives up what the reader's sheet covers, so the device is
+   drawn whole above the sheet. */
+.is-phone .orca-preview.is-reflow .orca-preview-well {
+  padding-bottom: calc(14px + var(--orca-sheet-cover, 0px));
+}
+
+/* In a sheet the list is the sheet's content, and the sheet is what
+   scrolls. */
+.orca-warnings .orca-preview-issues {
+  position: static;
+  width: auto;
+  min-width: 0;
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  overflow: visible;
+}
+
+/* mobile: export */
+.is-phone .orca-export-modal {
+  width: var(--dialog-width);
+  max-width: var(--dialog-max-width);
+}
+
+.is-mobile .orca-export-row {
+  min-height: var(--touch-size-m);
+}
+
+.is-tablet .orca-export-label {
+  width: 150px;
+  color: var(--text-normal);
+}
+
+.is-tablet .orca-export-files {
+  padding-left: calc(150px + var(--size-4-2));
+}
+
+/* A phone has no room for a label beside its field, so the label is
+   the heading over it. */
+.is-phone .orca-export-row {
+  flex-wrap: wrap;
+  row-gap: 0;
+}
+
+.is-phone .orca-export-label {
+  width: 100%;
+  font-size: 11px;
+  font-weight: var(--font-semibold);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.is-phone .orca-export-files {
+  padding-left: 0;
+}
+
+.is-mobile .orca-export-format {
+  gap: var(--size-4-2);
+  min-width: var(--touch-size-m);
+  min-height: var(--touch-size-m);
+}
+
+.is-mobile .orca-export-destination {
+  height: var(--touch-size-m);
+}
+
+.is-mobile .orca-preview-issue.orca-export-error {
+  border-radius: var(--radius-l);
+}
+
+.is-mobile .orca-export-at {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--size-4-1);
+}
+
+.is-mobile .orca-export-at button {
+  min-width: var(--touch-size-m);
+  min-height: var(--touch-size-m);
+}
+
+.is-mobile .orca-export-progress {
+  --orca-export-bar: 4px;
+  border-radius: 2px;
+}
+
+.is-mobile .orca-export-progress-bar {
+  border-radius: 2px;
+}
+
+/* The buttons are stacked, with Export over Cancel and the line that
+   says why over both. */
+.is-mobile .orca-export-footer {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--size-4-2);
+}
+
+.is-mobile .orca-export-footer button {
+  width: 100%;
+  min-height: var(--touch-size-m);
+  margin: 0;
+}
+
+.is-mobile .orca-export-footer button.mod-cta {
+  order: 1;
+}
+
+.is-mobile .orca-export-footer button:not(.mod-cta) {
+  order: 2;
+}
+
+.is-mobile .orca-export-footer .orca-export-share {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--size-4-2);
+}
+
+.orca-export-share-icon {
+  display: flex;
+}
+
+.orca-export-share-icon svg {
+  width: var(--icon-s);
+  height: var(--icon-s);
+}
+
+.is-mobile .orca-export-said {
+  flex: none;
+  margin: 0;
+  text-align: center;
+}
+
+.is-mobile .orca-export-said:empty {
+  display: none;
+}
+
+.is-mobile .orca-export-done {
+  flex-direction: column;
+  gap: var(--size-4-2);
+  text-align: center;
+}
+
+.is-mobile .orca-export-done-icon {
+  align-items: center;
+  justify-content: center;
+  width: var(--touch-size-m);
+  height: var(--touch-size-m);
+  border-radius: var(--touch-radius-m);
+  background: hsla(var(--accent-h), var(--accent-s), var(--accent-l), 0.15);
+  color: var(--text-accent);
+}
+
+.is-mobile .orca-export-done-icon svg {
+  width: var(--icon-l);
+  height: var(--icon-l);
+}
+
+.is-mobile .orca-export-done-name {
+  flex: none;
+  max-width: 100%;
+  font-size: var(--font-ui-medium);
+  font-weight: var(--font-semibold);
+}
+
+.is-mobile .orca-export-done-size {
+  font-family: inherit;
+  color: var(--text-muted);
+}
+
+/* mobile: navigator */
+
+.is-mobile .orca-navigator {
+  overflow: visible;
+  --orca-row-pad: 8px;
+  --orca-row-inset: 14px;
+  /* How far a handle moves the mark after it into the row. */
+  --orca-handle-room: calc(
+    var(--touch-size-m) + (var(--touch-size-m) - var(--icon-s)) / 2 - var(--orca-row-inset)
+  );
+}
+
+.is-tablet .orca-navigator {
+  --orca-row-pad: 6px;
+}
+
+/* Obsidian names the drawer's tab, and the file explorer's rules draw
+   the bar: a pill on a tablet, and on a phone a bar over the foot of the
+   list, which fades under it. */
+/* The list scrolls and the pill does not: the view holds the two in a
+   column, with the pill at the foot on a phone. The list has the
+   card's corner, so a card the scroll cuts is still round. */
+.is-mobile .workspace-leaf-content[data-type="orca-navigator"] > .view-content {
+  overflow: hidden;
+}
+
+.is-mobile .orca-nav-host {
+  height: 100%;
+}
+
+.is-mobile .orca-navigator {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+.is-mobile .orca-shelves {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0;
+  border-radius: var(--touch-radius-xxs);
+}
+
+/* A row is as tall as a touch, and long words wrap. */
+.is-mobile .orca-nav-item {
+  gap: var(--size-4-2);
+  height: auto;
+  min-height: var(--touch-size-m);
+  padding: var(--orca-row-pad) var(--size-4-2) var(--orca-row-pad) var(--orca-row-inset);
+  border-radius: var(--nav-item-radius);
+  color: var(--text-normal);
+  font-size: var(--font-ui-medium);
+  line-height: 1.3;
+  white-space: normal;
+}
+
+.is-mobile .orca-label {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* The corner is the one Obsidian's mobile cards have. */
+.is-mobile .orca-shelf {
+  border-radius: var(--touch-radius-xxs);
+}
+
+.is-mobile .orca-shelf-name {
+  padding-left: var(--size-4-2);
+  border-radius: calc(var(--touch-radius-xxs) - 1px);
+}
+
+.is-mobile .orca-shelf.is-open > .orca-shelf-name {
+  border-radius: calc(var(--touch-radius-xxs) - 1px) calc(var(--touch-radius-xxs) - 1px) 0 0;
+}
+
+.is-mobile .orca-outline {
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+}
+
+.is-mobile .orca-entry[data-kind="generated"] {
+  color: var(--text-faint);
+}
+
+.is-mobile .orca-nav-children {
+  padding-bottom: var(--size-4-1);
+}
+
+.is-mobile .orca-nav-heading {
+  height: var(--touch-size-m);
+  margin-top: 0;
+  padding: 0 var(--size-4-2) 0 var(--orca-row-inset);
+  font-size: 11px;
+}
+
+.is-mobile .orca-rename {
+  height: var(--touch-size-m);
+  font-size: var(--font-ui-small);
+}
+
+.is-mobile .orca-chip {
+  padding: 0 9px;
+  border-radius: var(--pill-radius);
+  font-size: 12px;
+  line-height: 22px;
+}
+
+.is-mobile .orca-fold,
+.is-mobile .orca-shelf-icon,
+.is-mobile .orca-entry-mark {
+  --icon-size: var(--icon-s);
+}
+
+.is-mobile .orca-entry-mark {
+  width: var(--icon-s);
+}
+
+/* A chevron is drawn at the size of the text and pressed at the size of
+   a touch. */
+.is-mobile .orca-fold {
+  position: relative;
+}
+
+.is-mobile .orca-fold::after {
+  content: "";
+  position: absolute;
+  inset: calc((var(--icon-s) - var(--touch-size-m)) / 2);
+}
+
+/* A row's actions are always drawn, each as wide as a touch and as tall
+   as the row. */
+.is-mobile .orca-shelf-name .orca-nav-actions {
+  opacity: 1;
+}
+
+.is-mobile .orca-nav-actions {
+  gap: 0;
+  margin-block: calc(-1 * var(--orca-row-pad));
+  margin-right: calc(-1 * var(--size-4-2));
+}
+
+.is-mobile button.orca-nav-action {
+  width: var(--touch-size-m);
+  height: var(--touch-size-m);
+  border-radius: var(--clickable-icon-radius);
+  color: var(--text-muted);
+  --icon-size: var(--icon-s);
+}
+
+.is-mobile .orca-nav-actions button.orca-nav-action + button.orca-nav-action {
+  margin-left: calc(-1 * var(--size-4-2));
+}
+
+/* A row starts with the handle it is dragged by, as wide as a touch and
+   as tall as the row, clear of the thumb that scrolls the list. The handle
+   takes the touch, so the drawer does not scroll under it. The touch of
+   the chevron after it starts where the handle ends. */
+.orca-drag-handle {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  width: var(--touch-size-m);
+  margin: calc(-1 * var(--orca-row-pad))
+    calc((var(--touch-size-m) - var(--icon-s)) / 2 - var(--size-4-2))
+    calc(-1 * var(--orca-row-pad)) calc(-1 * var(--orca-row-inset));
+  color: var(--text-faint);
+  touch-action: none;
+  --icon-size: var(--icon-s);
+}
+
+/* A section's handle is at the start of its rule. */
+.orca-nav-heading > .orca-drag-handle {
+  margin-block: 0;
+}
+
+/* mobile: design panel */
+
+/* The line under a font list that holds the face orca carries. */
+.orca-panel-sources {
+  padding: var(--size-4-2) var(--size-4-3) var(--size-4-1);
+  color: var(--text-faint);
+  font-size: var(--font-ui-smaller);
+}
+
+.orca-panel-folder {
+  font-family: var(--font-monospace);
+}
+
+/* The chip is set in the interface face, and its row in the face it names. */
+.orca-panel-built-in {
+  color: var(--text-faint);
+  font-family: var(--font-interface);
+}
+
+/* On a phone and a tablet, every control is as tall as a touch. */
+.is-mobile .orca-panel-header {
+  padding-block: 0 var(--size-4-2);
+  font-size: var(--font-ui-small);
+}
+
+.is-mobile .orca-panel-title {
+  color: var(--text-normal);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.is-mobile .orca-panel-action {
+  width: var(--touch-size-m);
+  height: var(--touch-size-m);
+  color: var(--text-normal);
+}
+
+.is-mobile .orca-panel-name {
+  color: var(--text-muted);
+}
+
+.is-mobile .orca-panel-row {
+  min-height: var(--touch-size-m);
+}
+
+.is-mobile .orca-panel-label {
+  width: 120px;
+  color: var(--text-normal);
+}
+
+.is-mobile .orca-panel-row.mod-grid > .orca-panel-label {
+  padding-top: 12px;
+}
+
+.is-mobile .orca-panel-under {
+  margin-left: calc(120px + var(--size-4-2));
+}
+
+/* A switch with a label keeps the label on its line at any width, and
+   the switch is at the end of it. */
+.is-mobile .orca-panel-row.mod-flag {
+  flex-wrap: nowrap;
+}
+
+.is-mobile .orca-panel-row.mod-flag > .orca-panel-label {
+  flex: 1;
+  width: auto;
+}
+
+.is-mobile .orca-panel-row.mod-flag > .orca-panel-controls {
+  flex: none;
+}
+
+/* The toggle is Obsidian's, which is shorter than a touch, so the input
+   inside it takes the press over a taller box. */
+.is-mobile .orca-panel-switch {
+  position: relative;
+}
+
+.is-mobile .orca-panel-switch > input {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100%, var(--touch-size-m));
+  height: var(--touch-size-m);
+  margin: 0;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+}
+
+.is-mobile .orca-panel-reset-slot {
+  width: var(--touch-size-m);
+}
+
+.is-mobile .orca-panel-reset-slot > .orca-panel-reset {
+  height: var(--touch-size-m);
+}
+
+.is-mobile .orca-panel-row.mod-grid > .orca-panel-reset-slot,
+.is-mobile .orca-panel-row.mod-grid > .orca-panel-overridden {
+  margin-top: 0;
+}
+
+.is-mobile button.orca-panel-overridden {
+  justify-content: center;
+  min-width: var(--touch-size-m);
+  min-height: var(--touch-size-m);
+}
+
+/* A card a tap opened takes a tap. The line is the button, and it
+   answers a tap anywhere on its row. */
+.orca-card.mod-tappable {
+  pointer-events: auto;
+}
+
+.orca-card.mod-tappable .orca-card-row {
+  position: relative;
+}
+
+button.orca-card-at {
+  display: block;
+  height: auto;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-accent);
+  text-align: left;
+}
+
+button.orca-card-at::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+}
+
+.is-mobile button.orca-panel-tab {
+  height: var(--touch-size-m);
+}
+
+/* A choice is as tall as a touch, and its lit pill is drawn inside a
+   clear border, so the segment is no taller than the choice. */
+.is-mobile .orca-panel-segment {
+  gap: 0;
+  padding: 0;
+  border: none;
+  border-radius: var(--input-radius);
+  background: var(--interactive-normal);
+}
+
+.is-mobile button.orca-panel-choice {
+  height: var(--touch-size-m);
+  min-width: 40px;
+  border: 3px solid transparent;
+  border-radius: var(--input-radius);
+  background-clip: padding-box;
+  font-size: var(--font-ui-small);
+}
+
+.is-mobile button.orca-panel-choice.is-on {
+  background-color: var(--background-primary);
+}
+
+/* A number field steps from a button at each end, each the size of a
+   touch. */
+.is-mobile :not(.orca-panel-cell) > .orca-panel-number.mod-ends {
+  align-items: center;
+  height: var(--touch-size-m);
+  border-radius: var(--input-radius);
+  background: var(--background-modifier-form-field);
+}
+
+.is-mobile :not(.orca-panel-cell) > .orca-panel-number.mod-ends > input.orca-panel-text {
+  width: 64px;
+  height: var(--touch-size-m);
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  text-align: center;
+}
+
+.is-mobile .orca-panel-number.mod-ends > input.orca-panel-text.is-invalid {
+  color: var(--text-error);
+}
+
+.is-mobile .orca-panel-number.mod-ends > button.orca-panel-step {
+  flex: none;
+  width: var(--touch-size-m);
+  height: var(--touch-size-m);
+  border: none;
+  border-radius: var(--input-radius);
+  background: transparent;
+}
+
+.is-mobile .orca-panel-step .orca-panel-icon {
+  --icon-size: var(--icon-s);
+}
+
+/* Two margins share a line, which has no room for four buttons, so a
+   margin is typed. */
+.is-mobile .orca-panel-cell > .orca-panel-number.mod-ends > button.orca-panel-step {
+  display: none;
+}
+
+.is-mobile .orca-panel-cell > .orca-panel-number > input.orca-panel-text {
+  border-radius: var(--input-radius);
+  text-align: center;
+}
+
+.is-mobile .orca-panel-said {
+  text-align: center;
+}
+
+.is-mobile button.orca-panel-glyph,
+.is-mobile input.orca-panel-glyph {
+  width: var(--touch-size-m);
+  height: var(--touch-size-m);
+}
+
+.is-mobile button.orca-panel-glyph-cell {
+  height: var(--touch-size-m);
+}
+
+/* The font list is drawn as Obsidian mobile draws a suggestion list. */
+.is-mobile .orca-panel-menu {
+  top: calc(var(--touch-size-m) + 6px);
+  padding: 6px;
+  border: none;
+  border-radius: var(--touch-radius-xxs);
+  box-shadow: 0 8px 30px rgb(0 0 0 / 45%);
+}
+
+.is-mobile input.orca-panel-filter {
+  height: var(--touch-size-m);
+}
+
+.is-mobile .orca-panel-rows {
+  margin-top: 6px;
+}
+
+.is-mobile .orca-panel-option {
+  gap: var(--size-4-2);
+  height: auto;
+  min-height: var(--touch-size-m);
+  padding: var(--size-4-2) var(--size-4-3);
+  border-radius: var(--touch-radius-xxs);
+}
+
+.is-mobile .orca-panel-field.is-added {
+  height: var(--touch-size-m);
+}
+
+@container (max-width: 360px) {
+  .is-mobile .orca-panel-label {
+    width: 100%;
+  }
+
+  .is-mobile .orca-panel-row.mod-grid > .orca-panel-label {
+    padding-top: 0;
+  }
+
+  .is-mobile .orca-panel-under {
+    margin-left: 0;
+  }
+}
+
+/* A touch that drags the sheet past its end stops there, and neither
+   stretches the sheet nor moves the drawer around it. */
+.is-mobile .orca-editor-host .cm-scroller {
+  padding-block: 10px;
+  font-size: 13px;
+  line-height: 2;
+  overscroll-behavior: none;
+}
+
+.is-mobile .orca-editor-host .cm-lineNumbers .cm-gutterElement {
+  min-width: 30px;
+  padding-right: 4px;
+}
+
+.is-mobile .orca-editor-host .cm-foldGutter .cm-gutterElement {
+  justify-content: center;
+  width: 24px;
+}
+
+.is-mobile .orca-editor-fold svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* No pointer is over the gutter on a touch screen, so a rule that can
+   fold always shows its chevron. */
+.is-mobile .orca-editor-host .cm-gutters [data-testid="orca-editor-fold"] {
+  visibility: visible;
+}
+
+/* The card at the caret starts at the text and stops short of the
+   sheet's right edge. */
+.is-mobile .cm-tooltip.orca-card-host .orca-card {
+  max-width: min(320px, calc(100vw - 2 * var(--size-4-6)));
+}
+
+/* A drawer too narrow for the field beside its buttons puts the
+   buttons under it. */
+.is-mobile .orca-search-row {
+  flex-wrap: wrap;
+}
+
+.is-mobile .orca-search .orca-search-field {
+  flex-basis: 140px;
+  height: var(--touch-size-m);
+  font-size: var(--font-ui-small);
+}
+
+.is-mobile .orca-search .orca-search-button {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--touch-size-m);
+  height: var(--touch-size-m);
+}
+
+.is-mobile .orca-search .orca-search-button svg {
+  width: var(--icon-s);
+  height: var(--icon-s);
+}
+
+/* The toolbar over the keyboard, drawn on the body while the CSS view
+   has the caret. Its sizes are those of Obsidian's own toolbar. */
+.orca-toolbar {
+  position: fixed;
+  right: 0;
+  bottom: var(--keyboard-height, 0px);
+  left: 0;
+  z-index: var(--layer-menu);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: var(--mobile-toolbar-height, 52px);
+  padding: 4px 8px;
+  background: var(--background-primary);
+}
+
+.orca-toolbar[hidden] {
+  display: none;
+}
+
+.orca-toolbar-list {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-width: 0;
+  height: var(--touch-size-m);
+  padding: 0 4px;
+  border-radius: var(--touch-radius-m);
+  background: var(--interactive-normal);
+  overflow-x: auto;
+}
+
+.orca-toolbar-option {
+  --icon-size: var(--icon-l);
+
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 100%;
+  color: var(--text-normal);
+  font-family: var(--font-monospace);
+  font-size: var(--font-ui-medium);
+}
+
+.is-tablet .orca-toolbar-option {
+  min-width: 50px;
+}
+
+.orca-toolbar > .orca-toolbar-option {
+  width: var(--touch-size-m);
+  min-width: var(--touch-size-m);
+  height: var(--touch-size-m);
+  border-radius: var(--touch-radius-m);
+  background: var(--interactive-normal);
+}
+
+/* The sheet ends above the toolbar, by the room the editor measures. */
+.is-mobile .orca-editor-host.is-typing {
+  margin-bottom: max(var(--size-4-3), var(--orca-editor-cover, 0px));
+}
+
+/* mobile: preview */
+
+/* A phone's bar floats over the foot of a view in some builds of
+   Obsidian, which name the room it takes. The pane stops above it, so
+   the foot is not under the bar. */
+.is-mobile .view-content.orca-preview {
+  padding-bottom: var(--view-bottom-spacing, 0);
+}
+
+.is-phone .view-content.orca-preview {
+  padding-bottom: calc(var(--view-bottom-spacing, 0px) + var(--size-4-3));
+}
+
+/* The bar holds the views, the chapter and Export, each as tall as a
+   touch. */
+.is-mobile .orca-preview-bar {
+  gap: 8px;
+  min-height: var(--touch-size-l);
+  padding: 4px 12px;
+  border-bottom: none;
+  background: var(--background-primary);
+}
+
+.is-mobile .orca-preview-divider {
+  display: none;
+}
+
+/* The chapter fills the bar upright. On its side the bar also holds
+   the foot, and the spacer parts the two. */
+.is-mobile .orca-preview-spacer {
+  flex: none;
+}
+
+.is-mobile .orca-preview[data-foot="bar"] .orca-preview-spacer {
+  flex: 1;
+}
+
+.is-mobile .orca-preview-bar select.orca-preview-chapter {
+  flex: 1;
+  min-width: 0;
+  max-width: none;
+  height: var(--touch-size-m);
+}
+
+.is-mobile .orca-preview[data-foot="bar"] select.orca-preview-chapter {
+  flex: 0 1 220px;
+}
+
+/* The warnings hang from the bar where the bar holds their count. */
+.is-mobile .orca-preview-bar > .orca-preview-issues {
+  right: 12px;
+  width: 400px;
+  max-width: calc(100% - 24px);
+}
+
+.is-mobile .orca-preview-views {
+  flex: none;
+  gap: 0;
+  padding: 0;
+  border: none;
+  border-radius: var(--input-radius);
+  background: var(--interactive-normal);
+}
+
+/* The button is the size of a touch and the pill drawn in it is
+   smaller, so the border is the part of the button that is not drawn. */
+.is-mobile .orca-preview-views button.clickable-icon {
+  box-sizing: border-box;
+  width: 46px;
+  height: var(--touch-size-m);
+  padding: 0;
+  border: 3px solid transparent;
+  border-radius: var(--clickable-icon-radius);
+  background-clip: padding-box;
+}
+
+.is-mobile .orca-preview-views button.clickable-icon.is-on {
+  background-color: var(--background-primary);
+  background-clip: padding-box;
+}
+
+.is-mobile .orca-preview-bar > button.clickable-icon,
+.is-mobile .orca-preview-foot > button.clickable-icon {
+  flex: none;
+  width: var(--touch-size-m);
+  height: var(--touch-size-m);
+  padding: 0;
+  border-radius: var(--clickable-icon-radius);
+}
+
+.is-mobile .orca-preview-export .svg-icon {
+  width: var(--icon-l);
+  height: var(--icon-l);
+}
+
+/* The page number, the arrows and the count of issues sit under the
+   page, where a desktop has its status bar. */
+.is-mobile .orca-preview-foot {
+  position: relative;
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  min-height: var(--touch-size-l);
+  padding: 4px 12px;
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+}
+
+.is-mobile .orca-preview input.orca-preview-folio {
+  flex: none;
+  width: 64px;
+  height: var(--touch-size-m);
+  min-height: var(--touch-size-m);
+  padding: 0;
+  text-align: center;
+  font-size: var(--font-ui-small);
+}
+
+.is-mobile .orca-preview-total {
+  flex: none;
+  margin: 0 4px;
+  white-space: nowrap;
+}
+
+/* A count with an error in it is drawn in the error's colour. */
+body:not(.is-mobile) .orca-preview .orca-preview-bar button.orca-preview-issues-count.mod-error,
+.is-mobile .orca-preview button.orca-preview-issues-count.mod-error .orca-preview-pill {
+  background-color: rgba(251, 70, 76, 0.15);
+}
+
+.orca-preview .orca-preview-bar button.orca-preview-issues-count.mod-error,
+.is-mobile .orca-preview button.orca-preview-issues-count.mod-error {
+  color: var(--color-red);
+}
+
+body:not(.is-mobile) .orca-preview .orca-preview-bar button.orca-preview-issues-count.mod-error:hover,
+body:not(.is-mobile) .orca-preview .orca-preview-bar button.orca-preview-issues-count.mod-error.is-on,
+.is-mobile .orca-preview button.orca-preview-issues-count.mod-error.is-on .orca-preview-pill {
+  background-color: rgba(251, 70, 76, 0.28);
+}
+
+.orca-panel-warned.mod-error {
+  color: var(--color-red);
+}
+
+/* The button is a clear target the size of a touch, and the count is a
+   pill 22px tall in the middle of it. The pill is as wide as what it
+   holds. */
+.is-mobile .orca-preview button.orca-preview-issues-count {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: var(--touch-size-m);
+  height: var(--touch-size-m);
+  margin: 0 -8px;
+  padding: 0 11px;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  background: none;
+  color: var(--color-orange);
+  font-size: 12px;
+  font-weight: var(--font-medium);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.is-mobile .orca-preview button.orca-preview-issues-count .orca-preview-pill {
+  flex: none;
+  box-sizing: border-box;
+  height: 22px;
+  padding: 0 9px;
+  border-radius: var(--pill-radius);
+  background-color: rgba(233, 151, 63, 0.15);
+  line-height: 1;
+}
+
+.is-mobile .orca-preview button.orca-preview-issues-count.is-on .orca-preview-pill {
+  background-color: rgba(233, 151, 63, 0.28);
+}
+
+/* The count is at the left of the foot and the arrows at its right. */
+.is-mobile .orca-preview-foot > button.orca-preview-issues-count {
+  margin: 0 auto 0 -11px;
+}
+
+.is-mobile .orca-preview-issues-count .orca-preview-opens {
+  display: none;
+}
+
+.is-mobile .orca-preview .orca-preview-issues {
+  max-height: 50vh;
+  padding: 12px;
+  border: none;
+  border-radius: var(--touch-radius-xxs);
+  background: var(--background-secondary);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+}
+
+/* Under the page the warnings open over it, above the count. */
+.is-mobile .orca-preview-foot > .orca-preview-issues {
+  top: auto;
+  right: 12px;
+  bottom: calc(100% + 8px);
+  left: 12px;
+  width: auto;
+  min-width: 0;
+  max-width: none;
+}
+
+.is-tablet .orca-preview-foot > .orca-preview-issues {
+  right: auto;
+  width: 400px;
+  max-width: calc(100% - 24px);
+}
+
+.is-mobile .orca-preview-issues .orca-preview-issue-head {
+  padding: 0 4px 8px;
+}
+
+.is-mobile .orca-preview-issues .orca-preview-issue {
+  padding: 10px 12px;
+  border-radius: 0 var(--radius-l) var(--radius-l) 0;
+}
+
+.is-mobile .orca-preview-issues .orca-preview-issue-said {
+  font-size: var(--font-ui-small);
+}
+
+.is-mobile .orca-preview-issues .orca-preview-issue-at {
+  margin-top: 0;
+  font-size: 13px;
+}
+
+/* The place is a line as tall as a touch, with none of the pill
+   Obsidian mobile draws a button in. The fix on an export error is the
+   same link. */
+.is-mobile .orca-preview-issues button.orca-preview-issue-open,
+.is-mobile .orca-export-at button.orca-preview-issue-open {
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+  height: auto;
+  min-height: var(--touch-size-m);
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: var(--text-accent);
+  font-weight: inherit;
+  text-align: left;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* A long path wraps inside its card, and the list scrolls one way. */
+.is-mobile .orca-preview .orca-preview-issues {
+  overflow-x: hidden;
+}
+
+.is-mobile .orca-preview-issues .orca-preview-issue {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* Upright, a spread is as wide as the screen leaves it. */
+.is-phone .orca-preview-well {
+  --orca-well-pad: 14px;
+}
+
+/* mobile: states */
+
+.is-mobile .orca-preview-well.is-covered {
+  padding: 24px;
+}
+
+.is-mobile .orca-preview-setting {
+  gap: 14px;
+}
+
+.is-mobile .orca-preview-setting-name {
+  font-size: var(--font-ui-medium);
+  line-height: 1.45;
+}
+
+.is-mobile .orca-preview-setting-note {
+  font-size: var(--font-ui-smaller);
+}
+
+.is-mobile .orca-preview-setting.mod-empty button {
+  min-height: var(--touch-size-m);
+  margin-top: 0;
+}
+
+/* On a phone a button is as wide as the column. */
+.is-phone .orca-preview-setting.mod-empty {
+  width: 100%;
+}
+
+.is-phone .orca-preview-setting.mod-empty button {
+  width: 100%;
+  max-width: 320px;
+}
+
+/* A notice over the pages sits where Obsidian mobile puts its own. */
+.is-mobile .orca-preview-setting.mod-again,
+.is-mobile .orca-preview-setting.mod-held {
+  top: 8px;
+  right: 12px;
+  left: 12px;
+  gap: 12px;
+  padding: 12px 18px;
+  border-radius: var(--touch-radius-xxs);
+  box-shadow: none;
+}
+
+.is-tablet .orca-preview-setting.mod-again,
+.is-tablet .orca-preview-setting.mod-held {
+  right: 10px;
+  left: auto;
+  max-width: 440px;
+  border-radius: var(--radius-m);
+}
+
+.is-mobile .orca-preview-setting.mod-again .orca-preview-setting-name,
+.is-mobile .orca-preview-setting.mod-held .orca-preview-setting-name {
+  font-size: var(--font-ui-smaller);
+  font-weight: var(--font-medium);
+}
+
+/* The name sits over the note, between the icon and the button. */
+.is-mobile .orca-preview-setting.mod-held {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 2px 12px;
+}
+
+.is-mobile .orca-preview-setting.mod-held > .orca-preview-setting-icon,
+.is-mobile .orca-preview-setting.mod-held > .orca-preview-report {
+  grid-row: 1 / span 2;
+}
+
+.is-mobile .orca-preview-setting.mod-held > .orca-preview-report {
+  grid-column: 3;
+  min-height: var(--touch-size-m);
+  margin-left: 0;
+  padding: 0 14px;
+  font-size: var(--font-ui-smaller);
+  white-space: nowrap;
+}
+
+/* The two versions are stacked, with the author's edit first. */
+.is-mobile .orca-changed-buttons {
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.is-mobile .orca-changed-buttons button {
+  min-height: var(--touch-size-m);
+}
+
+.is-phone .orca-changed-buttons button {
+  width: 100%;
+  max-width: 320px;
+}
+
+/* mobile: the EPUB view */
+
+/* The controls are as tall as a touch. Under the page they fill the
+   foot, with the device taking what the buttons leave. */
+.is-mobile .orca-reflow-controls {
+  flex: 1;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.is-mobile .orca-preview-foot > .orca-reflow-controls {
+  justify-content: stretch;
+}
+
+.is-mobile .orca-reflow-controls button.clickable-icon {
+  flex: none;
+  width: var(--touch-size-m);
+  height: var(--touch-size-m);
+  padding: 0;
+  border-radius: var(--clickable-icon-radius);
+}
+
+.is-mobile .orca-preview-bar select.orca-reflow-device {
+  height: var(--touch-size-m);
+  font-size: var(--font-ui-small);
+}
+
+.is-mobile .orca-preview-foot select.orca-reflow-device {
+  flex: 1;
+  min-width: 0;
+  text-overflow: ellipsis;
+}
+
+/* Under the page the EPUB view's controls leave the count no room for
+   words. It is an icon and a number there, at the left of the foot,
+   and its label says the rest. The button is one touch wide, and wider
+   for a count of more digits. */
+.is-mobile .orca-preview.is-reflow .orca-preview-foot > button.orca-preview-issues-count {
+  margin: 0;
+  padding: 0;
+}
+
+.is-mobile .orca-preview.is-reflow .orca-preview-foot .orca-preview-pill {
+  padding: 0 8px;
+}
+
+.is-mobile .orca-preview.is-reflow .orca-preview-foot .orca-preview-said {
+  display: none;
+}
+
+.is-mobile .orca-preview.is-reflow .orca-preview-foot .orca-preview-alert {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.is-mobile .orca-preview.is-reflow .orca-preview-foot .orca-preview-alert .svg-icon {
+  flex: none;
+  width: 14px;
+  height: 14px;
+}
+
+.is-mobile .orca-preview-bar > .orca-reflow-controls select.orca-reflow-device {
+  flex: 0 1 260px;
+}
+
+/* Under the page of a tablet's narrow pane the settings open above
+   their button, as the warnings do. A phone draws them in a sheet. */
+.orca-preview-foot .orca-reflow-popover {
+  right: 12px;
+  bottom: calc(100% + 8px);
+  left: 12px;
+  width: auto;
+  max-width: none;
+}
+
+/* On a tablet the settings are drawn as the warnings are, over the
+   device and its page. */
+.is-mobile .orca-reflow-popover {
+  border-radius: var(--touch-radius-xxs);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+}
+
+.is-mobile .orca-reflow-popover .orca-panel-label {
+  width: 8em;
+  white-space: nowrap;
+}
+
+/* A shadow is drawn at the edge of the border, so on mobile the room
+   around the pill is the segment's padding and the pill casts its
+   shadow from its own edge. */
+.is-mobile .orca-reflow-popover .orca-panel-segment {
+  padding: 3px;
+}
+
+.is-mobile .orca-reflow-popover button.orca-panel-choice {
+  height: calc(var(--touch-size-m) - 6px);
+  border: none;
+}
+
+/* mobile: inspect. A phone's drawer covers the page, so the pane is a
+   sheet over the foot of the page. The sheet is under the drawers and
+   their cover, so a drawer the sheet opens is drawn over the sheet. */
+.orca-inspect-sheet-host {
+  position: fixed;
+  z-index: calc(var(--layer-cover) - 1);
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+/* The sheet stops at four fifths of the screen, so the pinned box
+   stays in sight over the sheet, and the pane scrolls inside. */
+.orca-inspect-sheet {
+  display: flex;
+  flex-direction: column;
+  max-height: 80vh;
+  padding: 0 16px var(--safe-area-inset-bottom);
+  overflow: hidden;
+  border-radius: var(--menu-radius) var(--menu-radius) 0 0;
+  background: var(--background-secondary);
+  box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.45);
+  pointer-events: auto;
+}
+
+/* The grabber is as tall as a touch. A drag on the grabber pulls the
+   sheet and scrolls nothing. */
+.orca-inspect-grabber {
+  display: flex;
+  flex: none;
+  align-items: flex-start;
+  justify-content: center;
+  height: var(--touch-size-xs);
+  cursor: grab;
+  touch-action: none;
+}
+
+.orca-inspect-grabber .menu-grabber {
+  flex: none;
+  width: 15%;
+  margin-bottom: 0;
+}
+
+.orca-inspect-sheet .orca-inspect-pane {
+  gap: 8px;
+  min-height: 0;
+  max-height: none;
+  margin-bottom: 0;
+  padding: 0 0 12px;
+  border: none;
+  border-radius: 0;
+  background: none;
+}
+
+.orca-inspect-sheet .orca-inspect-crumbs,
+.orca-inspect-sheet .orca-inspect-rule {
+  font-size: 12.5px;
+}
+
+.orca-inspect-sheet .orca-inspect-src {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  font-size: var(--font-ui-smaller);
+}
+
+.orca-inspect-sheet .orca-inspect-computed {
+  font-size: var(--font-ui-smaller);
+}
+
+/* Until the sheet is pulled up, the sheet shows the crumbs and the
+   first rule that matched. */
+.orca-inspect-sheet[data-layout="peek"] .orca-inspect-group ~ *,
+.orca-inspect-sheet[data-layout="peek"] .orca-inspect-rule ~ .orca-inspect-rule {
+  display: none;
+}
+
+/* The page and the boxes drawn over the page move up together, so the
+   sheet clears the pinned box. */
+.is-phone .orca-preview-well > .orca-preview-sheets,
+.is-phone .orca-preview-well > .orca-inspect-host {
+  transform: translateY(calc(-1 * var(--orca-inspect-lift, 0px)));
+}
+
+/* The page moves over the time the sheet takes to rise. */
+@media (prefers-reduced-motion: no-preference) {
+  .is-phone .orca-preview-well > .orca-preview-sheets,
+  .is-phone .orca-preview-well > .orca-inspect-host {
+    transition: transform 200ms ease-out;
+  }
+}
