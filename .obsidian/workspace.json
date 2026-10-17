@@ -22,20 +22,6 @@
             }
           },
           {
-            "id": "856f295f5168570b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "02_literature_notes/literature_review.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "literature_review"
-            }
-          },
-          {
             "id": "69c1e7c0af890312",
             "type": "leaf",
             "state": {
@@ -90,9 +76,92 @@
               "icon": "globe-2",
               "title": "Indonesian Disability-Inclusion for Education & Accessibility (@i_deahub) • Instagram photos and videos"
             }
+          },
+          {
+            "id": "bd9dfa976663a207",
+            "type": "leaf",
+            "state": {
+              "type": "webviewer",
+              "state": {
+                "url": "https://www.google.com/search?q=wcag+examples+in+website&sca_esv=7c1e84b1a6318645&sxsrf=APpeQnshUSXJTiftAEgbZ6JcU5PaBehpdQ%3A1792115033180&ei=WYHRapfFCoq0hvcPgoeG-QU&biw=1192&bih=738&uact=5&oq=wcag+examples+in+website&gs_lp=Egxnd3Mtd2l6LXNlcnAiGHdjYWcgZXhhbXBsZXMgaW4gd2Vic2l0ZTIFECEYoAEyBRAhGKABMgUQIRifBUimJFDLAVjOI3ADeAGQAQCYAV6gAZQMqgECMjK4AQPIAQD4AQGYAhmgApkNwgIKEAAYRxjWBBiwA8ICDRAAGIAEGIoFGEMYsAPCAgoQABiABBiKBRhDwgIFEAAYgATCAgYQABgWGB7CAgcQABiABBgNwgIGEAAYHhgNwgIHEAAYgAQYE8ICCBAAGBYYHhgTwgIEECEYFZgDAIgGAZAGCZIHBDI0LjGgB9xgsgcEMjEuMbgHiw3CBwcwLjEzLjEyyAdHgAgB&sclient=gws-wiz-serp",
+                "title": "wcag examples in website - Penelusuran Google",
+                "mode": "webview"
+              },
+              "icon": "globe-2",
+              "title": "wcag examples in website - Penelusuran Google"
+            }
+          },
+          {
+            "id": "b062abc725d2d536",
+            "type": "leaf",
+            "state": {
+              "type": "webviewer",
+              "state": {
+                "url": "https://inviqa.com/blog/web-accessibility-examples-5-sites-doing-it-right",
+                "title": "Web accessibility examples: 5 sites doing it right",
+                "mode": "webview"
+              },
+              "icon": "globe-2",
+              "title": "Web accessibility examples: 5 sites doing it right"
+            }
+          },
+          {
+            "id": "d464e70f164b1a51",
+            "type": "leaf",
+            "state": {
+              "type": "webviewer",
+              "state": {
+                "url": "https://www.audioeye.com/post/accessible-website-design-examples/",
+                "title": "Accessible Website Design Examples & WCAG Best Practices | AudioEye",
+                "mode": "webview"
+              },
+              "icon": "globe-2",
+              "title": "Accessible Website Design Examples & WCAG Best Practices | AudioEye"
+            }
+          },
+          {
+            "id": "4724c1d59f202943",
+            "type": "leaf",
+            "state": {
+              "type": "webviewer",
+              "state": {
+                "url": "https://en.wikipedia.org/wiki/Web_Content_Accessibility_Guidelines#",
+                "title": "Web Content Accessibility Guidelines - Wikipedia",
+                "mode": "webview"
+              },
+              "icon": "globe-2",
+              "title": "Web Content Accessibility Guidelines - Wikipedia"
+            }
+          },
+          {
+            "id": "f28b9e1a099c3bc3",
+            "type": "leaf",
+            "state": {
+              "type": "webviewer",
+              "state": {
+                "url": "https://panduanwcag.com/simulasi",
+                "title": "Simulasi Kriteria WCAG | Panduan WCAG Indonesia",
+                "mode": "webview"
+              },
+              "icon": "globe-2",
+              "title": "Simulasi Kriteria WCAG | Panduan WCAG Indonesia"
+            }
+          },
+          {
+            "id": "f7d74bdefe0723da",
+            "type": "leaf",
+            "state": {
+              "type": "webviewer",
+              "state": {
+                "url": "https://www.w3.org/WAI/standards-guidelines/wcag/",
+                "title": "WCAG 2 Overview | Web Accessibility Initiative (WAI) | W3C",
+                "mode": "webview"
+              },
+              "icon": "globe-2",
+              "title": "WCAG 2 Overview | Web Accessibility Initiative (WAI) | W3C"
+            }
           }
-        ],
-        "currentTab": 4
+        ]
       }
     ],
     "direction": "vertical"
@@ -154,8 +223,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "b73c417c17052b00",
@@ -171,7 +239,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "agentic_reviews/30.09.2026_gemini3.8-flash-high_judul-dan-bab-1-review.md",
+                "file": "02_literature_notes/literature_review.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -273,12 +341,11 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 6
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -296,7 +363,7 @@
       "maguilanote:Maguilanote: new board": false
     }
   },
-  "active": "161ea1ed1d9789de",
+  "active": "9bc7d65ca0eefc73",
   "lastOpenFiles": [
     "02_literature_notes/literature_review.md",
     "resources/template/literature_review/Petunjuk Tugas Literature Review.pdf",
